@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS DVA-C02 — Complete Project Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0c10;
+  --surface: #111318;
+  --card: #161b24;
+  --border: #1e2535;
+  --accent: #f59e0b;
+  --accent2: #3b82f6;
+  --accent3: #10b981;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --done: #10b981;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);padding:48px 32px 40px;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,0.12) 0%,transparent 70%);}
+.header h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-1px;position:relative;}
+.header h1 span{color:var(--accent);}
+.header p{color:var(--muted);margin-top:10px;font-size:0.95rem;position:relative;}
+.badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;position:relative;}
+.badge{padding:4px 14px;border-radius:20px;font-size:0.75rem;font-family:'JetBrains Mono',monospace;font-weight:700;}
+.b1{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);}
+.b2{background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);}
+.b3{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);}
+
+/* STATS BAR */
+.stats{display:flex;gap:0;background:var(--surface);border-bottom:1px solid var(--border);}
+.stat{flex:1;padding:18px;text-align:center;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-num{font-size:1.6rem;font-weight:800;color:var(--accent);}
+.stat-label{font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+/* PROGRESS */
+.progress-bar{background:var(--surface);padding:16px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;}
+.progress-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width 0.4s ease;}
+.progress-text{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);white-space:nowrap;}
+
+/* FILTER ROW */
+.filter-row{padding:16px 32px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.filter-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700;}
+.search-box{margin-left:auto;padding:6px 14px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.8rem;width:220px;outline:none;}
+.search-box:focus{border-color:var(--accent);}
+
+/* MAIN LAYOUT */
+.main{max-width:1400px;margin:0 auto;padding:32px;}
+.section-title{font-size:0.7rem;font-family:'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+
+/* SERVICE CARD */
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color 0.2s;}
+.service-card:hover{border-color:rgba(245,158,11,0.3);}
+.service-card.completed{border-color:rgba(16,185,129,0.3);}
+
+.service-header{display:flex;align-items:center;gap:16px;padding:18px 20px;cursor:pointer;user-select:none;}
+.service-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.service-meta{flex:1;}
+.service-name{font-size:1rem;font-weight:700;}
+.service-sub{font-size:0.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:2px;}
+.service-progress{display:flex;align-items:center;gap:10px;}
+.mini-dots{display:flex;gap:4px;}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:background 0.2s;}
+.dot.done{background:var(--done);}
+.dot.active{background:var(--accent);}
+.chevron{color:var(--muted);font-size:0.8rem;transition:transform 0.3s;}
+.service-card.open .chevron{transform:rotate(180deg);}
+
+/* PROJECTS BODY */
+.projects-body{display:none;padding:0 20px 20px;}
+.service-card.open .projects-body{display:block;}
+
+/* PROJECT ITEM */
+.project-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+.project-header{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;cursor:pointer;}
+.project-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.project-check.checked{background:var(--done);border-color:var(--done);}
+.project-check.checked::after{content:'✓';color:#000;font-size:0.7rem;font-weight:900;}
+.project-info{flex:1;}
+.project-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.project-title{font-size:0.9rem;font-weight:700;}
+.level-badge{padding:2px 10px;border-radius:12px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;font-weight:700;white-space:nowrap;}
+.lv1{background:rgba(59,130,246,0.15);color:#60a5fa;}
+.lv2{background:rgba(16,185,129,0.15);color:#34d399;}
+.lv3{background:rgba(245,158,11,0.15);color:#fbbf24;}
+.lv4{background:rgba(239,68,68,0.15);color:#f87171;}
+.lv5{background:rgba(168,85,247,0.15);color:#c084fc;}
+.project-desc{font-size:0.78rem;color:var(--muted);margin-top:4px;line-height:1.5;}
+.expand-btn{color:var(--muted);font-size:0.7rem;cursor:pointer;transition:transform 0.2s;padding-top:4px;}
+.project-item.open .expand-btn{transform:rotate(180deg);}
+
+/* PROJECT DETAIL */
+.project-detail{display:none;padding:0 16px 16px 52px;}
+.project-item.open .project-detail{display:block;}
+.detail-section{margin-bottom:12px;}
+.detail-label{font-size:0.65rem;font-family:'JetBrains Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.detail-text{font-size:0.8rem;color:#94a3b8;line-height:1.6;}
+.tech-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{padding:3px 10px;background:rgba(30,37,53,0.8);border:1px solid var(--border);border-radius:6px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;color:var(--muted);}
+.exam-tip{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:10px 12px;font-size:0.78rem;color:#fbbf24;line-height:1.5;}
+.exam-tip::before{content:'💡 EXAM TIP: ';font-weight:700;}
+
+/* LEVELS LEGEND */
+.levels-map{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px;}
+.lv-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.lv-card .num{font-size:1.2rem;font-weight:800;margin-bottom:4px;}
+.lv-card .name{font-size:0.68rem;font-family:'JetBrains Mono',monospace;color:var(--muted);}
+
+/* CATEGORY SECTIONS */
+.cat-section{margin-bottom:40px;}
+.cat-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.cat-dot{width:8px;height:8px;border-radius:50%;}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .stats{flex-wrap:wrap;}
+  .stat{min-width:50%;}
+  .levels-map{grid-template-columns:repeat(3,1fr);}
+  .search-box{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AWS <span>DVA-C02</span> Complete Project Roadmap</h1>
+  <p>33 Services · 5 Projects Each · 165 Hands-On Projects · Beginner → Advanced</p>
+  <div class="badge-row">
+    <span class="badge b1">Terraform IaC</span>
+    <span class="badge b2">Real-World Problems</span>
+    <span class="badge b3">Exam-Mapped</span>
+    <span class="badge b1">DVA-C02 Certified Path</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">33</div><div class="stat-label">Services</div></div>
+  <div class="stat"><div class="stat-num">165</div><div class="stat-label">Projects</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Levels Each</div></div>
+  <div class="stat"><div class="stat-num" id="doneCount">0</div><div class="stat-label">Completed</div></div>
+</div>
+
+<div class="progress-bar">
+  <span style="font-size:0.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace;">OVERALL PROGRESS</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-text" id="progressText">0 / 165</span>
+</div>
+
+<div class="filter-row">
+  <button class="filter-btn active" onclick="filterCat('all',this)">All Services</button>
+  <button class="filter-btn" onclick="filterCat('compute',this)">Compute</button>
+  <button class="filter-btn" onclick="filterCat('storage',this)">Storage & DB</button>
+  <button class="filter-btn" onclick="filterCat('messaging',this)">Messaging</button>
+  <button class="filter-btn" onclick="filterCat('security',this)">Security</button>
+  <button class="filter-btn" onclick="filterCat('devops',this)">DevOps</button>
+  <button class="filter-btn" onclick="filterCat('monitoring',this)">Monitoring</button>
+  <input class="search-box" type="text" placeholder="Search projects..." oninput="searchProjects(this.value)">
+</div>
+
+<div class="main">
+
+<div class="levels-map">
+  <div class="lv-card"><div class="num" style="color:#60a5fa">L1</div><div class="name">Beginner<br>Core concepts</div></div>
+  <div class="lv-card"><div class="num" style="color:#34d399">L2</div><div class="name">Beginner+<br>First deploy</div></div>
+  <div class="lv-card"><div class="num" style="color:#fbbf24">L3</div><div class="name">Intermediate<br>Real patterns</div></div>
+  <div class="lv-card"><div class="num" style="color:#f87171">L4</div><div class="name">Intermediate+<br>Production</div></div>
+  <div class="lv-card"><div class="num" style="color:#c084fc">L5</div><div class="name">Advanced<br>Full system</div></div>
+</div>
+
+<div id="servicesContainer"></div>
+
+</div><!-- /main -->
+
+<script>
+const SERVICES = [
+  // ─── COMPUTE ───────────────────────────────────────────────────────────────
+  {
+    id:'ec2', name:'Amazon EC2', sub:'Elastic Compute Cloud', icon:'🖥️', color:'#f97316', cat:'compute',
+    projects:[
+      {title:'EC2 Instance Type Explorer',level:1,ldesc:'Beginner',
+       problem:'You need to understand the difference between t3.micro, m5.large, c5.xlarge and when to pick each.',
+       what:'Build a comparison table script that lists instance families, vCPUs, memory, and use cases. Use AWS CLI to query instance type details.',
+       tech:['AWS CLI','Python','boto3'],
+       exam:'EC2 instance types appear in nearly every scenario question. Know: T = burstable, M = general purpose, C = compute, R = memory, I = storage optimised.'},
+      {title:'EC2 Web Server with User Data',level:2,ldesc:'Beginner+',
+       problem:'A startup needs a web server running the moment an instance boots — no SSH required.',
+       what:'Launch an EC2 instance using Terraform with a user_data script that installs Nginx, writes an HTML page, and starts the service automatically on boot.',
+       tech:['Terraform','EC2 User Data','Nginx','Bash'],
+       exam:'User data runs ONCE at first boot as root. If you need it to run on every reboot, use cloud-init directives with runcmd. This distinction appears in scenario questions.'},
+      {title:'Auto Scaling Group with Launch Template',level:3,ldesc:'Intermediate',
+       problem:'An e-commerce site gets 10x traffic on sale days. Manual scaling is too slow and expensive.',
+       what:'Create an ASG with a Launch Template, target tracking scaling policy (CPU 60%), and ALB integration. Test scale-out by stress-testing the instances.',
+       tech:['Terraform','ASG','ALB','Launch Template','CloudWatch'],
+       exam:'Launch Templates replace Launch Configurations. LTs support versioning, spot + on-demand mix, and T3 unlimited. Know the difference for the exam.'},
+      {title:'Spot Instance Fleet with Interruption Handling',level:4,ldesc:'Intermediate+',
+       problem:'A video rendering company spends $50k/month on on-demand EC2. Spot instances cost 70% less but get terminated without warning.',
+       what:'Build a Spot Fleet with mixed instance types, a 2-minute interruption handler Lambda (triggered by EventBridge), and SQS queue for job checkpointing so work is never lost.',
+       tech:['Spot Fleet','Lambda','EventBridge','SQS','boto3'],
+       exam:'Spot interruption notice is published to EC2 instance metadata 2 minutes before termination. Your app must poll http://169.254.169.254/latest/meta-data/spot/termination-time every 5 seconds.'},
+      {title:'EC2 Image Builder Hardened AMI Pipeline',level:5,ldesc:'Advanced',
+       problem:'Every time a new EC2 instance is launched, someone manually installs packages and applies security patches. This takes 30 minutes and introduces drift.',
+       what:'Build a full EC2 Image Builder pipeline: base image → install components → security hardening → CIS benchmark test → distribute AMI to 3 regions → notify via SNS → auto-update Launch Template.',
+       tech:['EC2 Image Builder','SSM','SNS','Terraform','CIS Benchmark'],
+       exam:'EC2 Image Builder is a managed AMI factory. Key distinction: Image Builder vs AMI baking with Packer. Image Builder is fully managed, supports testing phases, and integrates with AWS Organizations for distribution.'},
+    ]
+  },
+  {
+    id:'ecr', name:'Amazon ECR', sub:'Elastic Container Registry', icon:'📦', color:'#f97316', cat:'compute',
+    projects:[
+      {title:'Push Your First Docker Image to ECR',level:1,ldesc:'Beginner',
+       problem:'Your team builds Docker images locally but has no central place to store and version them.',
+       what:'Create an ECR private repository, authenticate Docker, build a simple Node.js app image, tag it, and push it. Practice the full docker build → tag → push workflow.',
+       tech:['Docker','AWS CLI','ECR','Node.js'],
+       exam:'ECR authentication token expires after 12 hours. Use aws ecr get-login-password | docker login to refresh. This is tested in CI/CD pipeline questions.'},
+      {title:'ECR Lifecycle Policy — Image Cleanup Automation',level:2,ldesc:'Beginner+',
+       problem:'An ECR repository has 2,000 untagged images from 18 months of CI builds. Storage costs $180/month.',
+       what:'Write a Terraform lifecycle policy that keeps the last 10 tagged images per environment (prod/staging/dev) and deletes all untagged images older than 1 day.',
+       tech:['Terraform','ECR Lifecycle Policy','JSON'],
+       exam:'ECR lifecycle policies use countNumber (keep N images) or sinceImagePushed (keep images < N days old). Untagged images accumulate silently — lifecycle policies are the fix.'},
+      {title:'ECR Cross-Account Image Sharing',level:3,ldesc:'Intermediate',
+       problem:'A microservices org has 5 AWS accounts. Each team rebuilds the base image independently, causing version drift and wasted build time.',
+       what:'Create a shared ECR repository in a central account with a resource-based policy allowing 4 spoke accounts to pull images. Deploy a CodePipeline that pushes the base image on every commit.',
+       tech:['ECR Repository Policy','IAM','CodePipeline','Terraform'],
+       exam:'ECR uses resource-based policies (like S3) not identity-based policies for cross-account access. The principal in the policy is the account ID or role ARN of the consuming account.'},
+      {title:'Container Vulnerability Scanning Pipeline',level:4,ldesc:'Intermediate+',
+       problem:'A fintech company ships Docker images with known CVEs. Security audit found 3 critical vulnerabilities in production containers.',
+       what:'Enable ECR enhanced scanning (powered by Inspector), build a Lambda that triggers on scan completion findings events, blocks image promotion to prod if CRITICAL CVEs exist, and posts Slack alert.',
+       tech:['ECR Enhanced Scanning','Inspector','EventBridge','Lambda','SNS'],
+       exam:'ECR basic scanning uses Clair. Enhanced scanning uses Amazon Inspector and supports continuous scanning on push. EventBridge receives scan findings — pattern: source: aws.inspector2.'},
+      {title:'Multi-Architecture Image Build and Publish',level:5,ldesc:'Advanced',
+       problem:'A company runs workloads on both x86 (Intel) and ARM (Graviton) instances. Maintaining two separate Dockerfiles doubles the build effort.',
+       what:'Use CodeBuild with Docker Buildx to build a multi-architecture manifest (linux/amd64 + linux/arm64), push both to ECR, create a manifest list, test both architectures pull correctly on EC2 instances of each type.',
+       tech:['Docker Buildx','CodeBuild','ECR','Graviton','Manifest List'],
+       exam:'Multi-arch images in ECR use a manifest list (OCI image index). When you docker pull an image, Docker automatically selects the correct architecture layer. Graviton3 is arm64.'},
+    ]
+  },
+  {
+    id:'ecs', name:'Amazon ECS', sub:'Elastic Container Service', icon:'🐳', color:'#f97316', cat:'compute',
+    projects:[
+      {title:'Your First ECS Task Definition',level:1,ldesc:'Beginner',
+       problem:'You know Docker but have never run a container in AWS. ECS task definitions look confusing.',
+       what:'Write a task definition JSON for a simple web app container: image from ECR, 256 CPU units, 512MB memory, port 80 mapped, CloudWatch logs configured. Run it as a Fargate task.',
+       tech:['ECS','Fargate','Task Definition','CloudWatch Logs'],
+       exam:'Task Definition = the blueprint (like a Dockerfile for ECS). Task = a running instance of the definition. Service = keeps N tasks running. Know these three concepts cold.'},
+      {title:'ECS Fargate Service Behind an ALB',level:2,ldesc:'Beginner+',
+       problem:'Your containerised API needs to scale horizontally and be reachable via HTTPS without managing any servers.',
+       what:'Deploy an ECS Fargate service with a desired count of 2, register it to an ALB target group, configure health checks, and test that requests load-balance between both containers.',
+       tech:['Terraform','ECS Fargate','ALB','Target Group','ACM'],
+       exam:'ECS service load balancing uses dynamic port mapping for EC2 launch type (container port ≠ host port). Fargate does NOT use dynamic port mapping — each task gets its own ENI and fixed port.'},
+      {title:'ECS Service Auto Scaling',level:3,ldesc:'Intermediate',
+       problem:'Your API handles 100 req/s normally but 2,000 req/s during peak. Static desired_count wastes money at night.',
+       what:'Configure Application Auto Scaling for the ECS service: target tracking on ALBRequestCountPerTarget (400 req/target), scale-out cooldown 60s, scale-in cooldown 300s. Load test and verify.',
+       tech:['ECS','Application Auto Scaling','CloudWatch','ALB Metrics'],
+       exam:'ECS Auto Scaling and EC2 Auto Scaling are different services. ECS uses Application Auto Scaling (not EC2 ASG). For EC2 launch type you need BOTH: ECS service scaling AND EC2 ASG for capacity.'},
+      {title:'Blue/Green Deployment with CodeDeploy',level:4,ldesc:'Intermediate+',
+       problem:'Deploying a new container version causes 30 seconds of downtime. The business cannot accept any downtime.',
+       what:'Implement ECS blue/green deployment via CodeDeploy: create a second target group (green), configure the deployment group, deploy a new task definition version, validate traffic shift from 10% → 50% → 100% with automatic rollback on CloudWatch alarm.',
+       tech:['CodeDeploy','ECS','ALB','Blue/Green','CloudWatch Alarms'],
+       exam:'ECS blue/green with CodeDeploy requires: 2 ALB target groups, 2 ALB listener rules (prod + test), CodeDeploy deployment group of type ECS. Rolling update is simpler but causes brief capacity reduction.'},
+      {title:'ECS Service Mesh with AWS App Mesh',level:5,ldesc:'Advanced',
+       problem:'A microservices platform has 8 ECS services calling each other. There is no visibility into inter-service latency, no retries on failure, and no circuit breaking.',
+       what:'Deploy App Mesh with Envoy sidecar proxies on all 8 ECS services, configure virtual services/routers/nodes, enable X-Ray tracing through the mesh, implement a circuit breaker for the payment service, and build a CloudWatch dashboard showing p99 inter-service latency.',
+       tech:['App Mesh','Envoy','X-Ray','ECS','CloudWatch','Terraform'],
+       exam:'App Mesh injects an Envoy sidecar proxy into each task. Traffic flows through the proxy for observability and control. This is tested in X-Ray + ECS combination questions.'},
+    ]
+  },
+  {
+    id:'beanstalk', name:'Elastic Beanstalk', sub:'PaaS Application Deployment', icon:'🌱', color:'#f97316', cat:'compute',
+    projects:[
+      {title:'Deploy Your First Web App to Beanstalk',level:1,ldesc:'Beginner',
+       problem:'A solo developer wants to deploy a Node.js app to AWS without learning EC2, ALB, or ASG.',
+       what:'Use the EB CLI to initialise a Node.js environment, deploy a simple Express app, and understand the components Beanstalk creates automatically (EC2, ASG, ALB, Security Groups).',
+       tech:['EB CLI','Node.js','Express'],
+       exam:'Beanstalk is FREE — you only pay for underlying resources. Key concept: Beanstalk manages the infrastructure; you manage the application. The platform versions (Node.js 18 on AL2023) matter for exam scenarios.'},
+      {title:'Beanstalk Environment Configuration with .ebextensions',level:2,ldesc:'Beginner+',
+       problem:'Every Beanstalk deployment loses environment variables and custom Nginx settings because they are not version-controlled.',
+       what:'Create a .ebextensions/ folder with: 01_env_vars.config (environment variables), 02_nginx.config (custom upload size limit), 03_packages.config (install awslogs agent). Deploy and verify all configs apply.',
+       tech:['.ebextensions','YAML','Nginx','Beanstalk'],
+       exam:'.ebextensions files are processed in alphabetical order. They run BEFORE the application starts. Use option_settings for environment settings, packages/commands for OS-level config.'},
+      {title:'Beanstalk Blue/Green Deployment with URL Swap',level:3,ldesc:'Intermediate',
+       problem:'Deploying to a single Beanstalk environment means users hit the app during deployment causing errors.',
+       what:'Create two identical Beanstalk environments (blue = prod, green = staging). Deploy new version to green, run smoke tests, then use Swap Environment URLs to make green the new prod — zero downtime.',
+       tech:['Beanstalk','Route 53','CNAME Swap','EB CLI'],
+       exam:'Beanstalk URL swap is a CNAME change at DNS level — it is NOT instant. TTL means some users hit old environment for minutes. For true instant swap, use ALB weighted routing instead of DNS swap.'},
+      {title:'Beanstalk Worker Environment with SQS',level:4,ldesc:'Intermediate+',
+       problem:'A web app needs to process uploaded images in the background — resizing, watermarking — without slowing down HTTP responses.',
+       what:'Deploy a Beanstalk Worker environment that reads from SQS, processes image resize jobs, and posts completion events to SNS. The web tier Beanstalk environment pushes jobs to SQS.',
+       tech:['Beanstalk Worker','SQS','SNS','S3','Python'],
+       exam:'Beanstalk Worker environments automatically install an SQS daemon that polls the queue and posts messages to localhost/. Your app listens on that port. You do NOT need to manage SQS polling yourself.'},
+      {title:'Multi-Container Beanstalk with Docker Compose',level:5,ldesc:'Advanced',
+       problem:'A Node.js API, Redis cache, and Nginx reverse proxy need to run together. Managing 3 separate deployments is complex.',
+       what:'Deploy a multi-container Beanstalk environment using a Dockerrun.aws.json (version 2) that orchestrates Nginx → Node.js → Redis. Configure EFS for shared session storage, ALB for HTTPS, and CloudWatch for container-level metrics.',
+       tech:['Beanstalk Multi-Container','Docker Compose','EFS','Redis','Nginx'],
+       exam:'Multi-container Beanstalk uses ECS under the hood. Dockerrun.aws.json v2 format defines multiple containers similar to ECS task definitions. This is often confused with ECS — know the Beanstalk wrapper abstracts ECS completely.'},
+    ]
+  },
+  {
+    id:'lambda', name:'AWS Lambda', sub:'Serverless Functions', icon:'λ', color:'#f59e0b', cat:'compute',
+    projects:[
+      {title:'Your First Lambda Function',level:1,ldesc:'Beginner',
+       problem:'You hear "serverless" everywhere but have never written a Lambda function.',
+       what:'Write a Python Lambda that receives an API Gateway event, parses the body, does a calculation, and returns a JSON response. Deploy via Terraform. Test with test events.',
+       tech:['Lambda','Python','Terraform','API Gateway'],
+       exam:'Lambda execution model: cold start (init duration) + warm execution. Cold starts add 100ms–500ms. Provisioned Concurrency eliminates cold starts for latency-sensitive APIs — costs more but is always warm.'},
+      {title:'S3-Triggered Image Thumbnail Generator',level:2,ldesc:'Beginner+',
+       problem:'Users upload full-size photos. The app needs 200px thumbnails automatically created without a server.',
+       what:'Lambda triggered by S3 ObjectCreated events. Uses Pillow to create a thumbnail and writes it to a destination bucket with the same key but under a thumbs/ prefix.',
+       tech:['Lambda','S3 Trigger','Pillow','Lambda Layers','Python'],
+       exam:'Lambda S3 triggers use S3 event notifications, not EventBridge. Important: do NOT trigger the Lambda from the same bucket it writes to — you create an infinite loop. Always use source ≠ destination buckets.'},
+      {title:'Lambda with SQS and Dead Letter Queue',level:3,ldesc:'Intermediate',
+       problem:'Lambda processes SQS messages but some fail silently and messages are lost. Nobody knows about the failures.',
+       what:'Build Lambda + SQS integration with a Dead Letter Queue (DLQ). Configure batch size=10, bisect_batch_on_error=true, max_receive_count=3 on SQS, alarm on DLQ depth.',
+       tech:['Lambda','SQS','DLQ','CloudWatch Alarm','Terraform'],
+       exam:'bisect_batch_on_function_error splits a failing batch in half to isolate the bad message. Without it, one bad message in a batch of 10 retries all 10. Always enable this for SQS event source mappings.'},
+      {title:'Lambda Power Tuning Automation',level:4,ldesc:'Intermediate+',
+       problem:'A Lambda function is set to 128MB because nobody ever changed the default. It might run 5x faster at 1024MB for the same cost.',
+       what:'Deploy the AWS Lambda Power Tuning Step Functions state machine. Run it against your function across 10 memory sizes (128MB → 3008MB). Plot the cost vs performance graph. Apply the optimal setting.',
+       tech:['Lambda Power Tuning','Step Functions','CloudWatch','boto3'],
+       exam:'Lambda is billed per GB-second. A function at 128MB running 1000ms costs the same as 1024MB running 125ms. Memory also scales CPU proportionally — sometimes more memory = faster = cheaper. Always tune memory.'},
+      {title:'Lambda SnapStart Java API — Zero Cold Start',level:5,ldesc:'Advanced',
+       problem:'A Java-based microservice takes 8 seconds for cold starts because of JVM initialization. This is unusable for production APIs.',
+       what:'Build a Spring Boot Lambda function, enable SnapStart (takes a snapshot of initialized execution environment), benchmark cold start before vs after (should drop from 8s to <1s), implement cache priming hooks, deploy behind API Gateway with canary deployment.',
+       tech:['Lambda SnapStart','Java','Spring Boot','API Gateway','X-Ray'],
+       exam:'SnapStart is only available for Java 11+ managed runtimes. It takes a Firecracker microVM snapshot after init, restores it on invoke. Not suitable for functions that must generate unique state at init (e.g., random seeds).'},
+    ]
+  },
+
+  // ─── STORAGE & DB ──────────────────────────────────────────────────────────
+  {
+    id:'s3', name:'Amazon S3', sub:'Simple Storage Service', icon:'🪣', color:'#3b82f6', cat:'storage',
+    projects:[
+      {title:'S3 Storage Classes Deep Dive',level:1,ldesc:'Beginner',
+       problem:'Every company using AWS has the same silent problem: S3 bills nobody understands. Data stays in Standard forever burning money.',
+       what:'Build a comparison script that calculates total monthly cost for 100TB stored in each of the 6 storage classes. Add a decision tree: given access frequency and retrieval time tolerance, which class?',
+       tech:['Python','AWS Pricing API','boto3'],
+       exam:'Standard=$0.023/GB, Standard-IA=$0.0125/GB, Glacier=$0.0036/GB, Deep Archive=$0.00099/GB. Deep Archive is 23x cheaper than Standard. Objects in IA/Glacier have minimum storage duration (30/90/180 days) — deleting early still charges for full period.'},
+      {title:'S3 Lifecycle Rules with Terraform',level:2,ldesc:'Beginner+',
+       problem:'Log files accumulate in Standard storage for years. Nobody set up tiering rules.',
+       what:'Implement the full lifecycle rule from the template: Standard→IA(30d)→Glacier IR(90d)→Glacier(180d)→Deep Archive(365d)→Delete(2557d). Apply to logs/ prefix. Verify with AWS CLI.',
+       tech:['Terraform','S3 Lifecycle','AWS CLI'],
+       exam:'Lifecycle rules evaluate at midnight UTC daily. Objects need minimum 30 days in Standard before transitioning to IA. You cannot transition directly from Standard to Deep Archive in one step — must pass through intermediate classes.'},
+      {title:'S3 Intelligent-Tiering for Unknown Access Patterns',level:3,ldesc:'Intermediate',
+       problem:'Application uploads have unpredictable access patterns — some files are hit daily, others never read again. Static lifecycle rules miss the mark.',
+       what:'Enable Intelligent-Tiering on a bucket with Archive Access (90 days) and Deep Archive Access (180 days) tiers. Write a script to seed objects with different access patterns and observe tier transitions.',
+       tech:['Terraform','S3 IT','boto3','Python'],
+       exam:'IT has a per-object monitoring charge: $0.0025 per 1,000 objects/month. For objects under 128KB, IT costs MORE than Standard-IA. Never use IT for small objects or objects accessed less than 30 days.'},
+      {title:'S3 Storage Lens Dashboard with Athena Queries',level:4,ldesc:'Intermediate+',
+       problem:'S3 costs are spread across 50 buckets with no visibility into which teams are spending what.',
+       what:'Enable Storage Lens org-wide, export metrics to Parquet in S3, create an Athena database, and write 5 SQL queries: idle buckets, top spenders, incomplete MPU waste, small object penalty, storage class distribution by team prefix.',
+       tech:['Storage Lens','Athena','Parquet','SQL','Terraform'],
+       exam:'Storage Lens exports to S3 in CSV or Parquet. Parquet is 10x cheaper for Athena because Athena charges per TB scanned and Parquet is columnar compressed. Always use Parquet for analytical exports.'},
+      {title:'Lambda S3 Cost Anomaly Detector with Auto-Remediation',level:5,ldesc:'Advanced',
+       problem:'Idle buckets with 100% Standard storage cost thousands per month. Nobody reviews Storage Lens data manually.',
+       what:'Full production system: EventBridge nightly trigger → Lambda queries Athena Storage Lens export → finds wasteful buckets → applies lifecycle rule automatically → tags bucket → SNS alert → CloudWatch metric.',
+       tech:['Lambda','EventBridge','Athena','SNS','CloudWatch','boto3'],
+       exam:'Lambda needs s3:PutLifecycleConfiguration + s3:GetBucketTagging + athena:StartQueryExecution. Athena queries are async — Lambda must poll GetQueryExecution for SUCCEEDED status before reading results.'},
+    ]
+  },
+  {
+    id:'rds', name:'Amazon RDS', sub:'Relational Database Service', icon:'🗄️', color:'#3b82f6', cat:'storage',
+    projects:[
+      {title:'RDS MySQL Instance Setup',level:1,ldesc:'Beginner',
+       problem:'A developer needs a managed MySQL database without managing server patches, backups, or failover.',
+       what:'Provision an RDS MySQL instance with Terraform: DB subnet group (2 AZs), security group (port 3306 from app SG only), automated backups (7-day retention), storage autoscaling enabled.',
+       tech:['Terraform','RDS MySQL','VPC','Security Groups'],
+       exam:'RDS automated backups use the backup window. During the window there may be brief I/O suspension on single-AZ. Multi-AZ performs backups from the standby — no I/O impact on primary. Always use Multi-AZ for production.'},
+      {title:'RDS Read Replica for Read Scaling',level:2,ldesc:'Beginner+',
+       problem:'A reporting dashboard runs heavy SELECT queries that slow down the primary database serving the web app.',
+       what:'Create a Read Replica of your RDS instance, point the reporting app connection string to the replica endpoint, and verify writes still go to primary. Promote the replica to standalone in a DR drill.',
+       tech:['RDS Read Replica','Python','boto3','Terraform'],
+       exam:'Read Replicas use async replication — there is replication lag. Never read from a replica if the app needs 100% up-to-date data. Read Replica ≠ Multi-AZ. Multi-AZ is HA (sync), Read Replica is scaling (async).'},
+      {title:'RDS Proxy for Lambda Database Connections',level:3,ldesc:'Intermediate',
+       problem:'Lambda functions open new DB connections on every invocation. At 1,000 concurrent Lambdas you hit RDS max_connections and the database crashes.',
+       what:'Deploy RDS Proxy in front of your RDS MySQL instance. Point all Lambda functions to the Proxy endpoint instead. Compare connection count in CloudWatch before and after — should drop by 90%+.',
+       tech:['RDS Proxy','Lambda','Secrets Manager','Terraform','CloudWatch'],
+       exam:'RDS Proxy pools and reuses DB connections. Lambda (max 1,000 concurrent) × 1 connection each = 1,000 connections to DB without Proxy. RDS Proxy reduces this to ~5–20 pooled connections. Required for serverless architectures.'},
+      {title:'RDS Multi-AZ Failover Testing',level:4,ldesc:'Intermediate+',
+       problem:'The team says they have Multi-AZ configured but nobody has ever tested a failover. Untested DR is no DR.',
+       what:'Build a monitoring script that continuously pings the RDS endpoint. Trigger a Multi-AZ failover via AWS CLI. Measure time from failover initiation to connectivity restored. Capture the DNS flip in CloudWatch Logs.',
+       tech:['RDS Multi-AZ','boto3','CloudWatch','Route 53','Python'],
+       exam:'RDS Multi-AZ failover completes in 60–120 seconds. It is DNS-based — the CNAME flips from primary to standby. Your app must use the RDS endpoint (not IP) and have appropriate TCP keepalive + reconnect logic.'},
+      {title:'RDS Performance Insights + Automated Query Optimization',level:5,ldesc:'Advanced',
+       problem:'RDS CPU spikes to 100% every Tuesday at 2pm but nobody knows which query is the cause. DBAs spend hours on manual investigation.',
+       what:'Enable Performance Insights with 7-day retention, build a Lambda that queries the Performance Insights API for top SQL hourly, stores results in DynamoDB, and sends a weekly digest via SES with the top 5 slow queries and index recommendations.',
+       tech:['RDS Performance Insights','Lambda','DynamoDB','SES','EventBridge'],
+       exam:'Performance Insights shows DB load in units of Average Active Sessions (AAS). AAS > vCPU count = CPU bottleneck. The top SQL feature shows wait events per query — use this to pinpoint locking vs CPU vs I/O issues.'},
+    ]
+  },
+  {
+    id:'aurora', name:'Amazon Aurora', sub:'MySQL & PostgreSQL-compatible', icon:'⚡', color:'#3b82f6', cat:'storage',
+    projects:[
+      {title:'Aurora vs RDS — Architecture Comparison',level:1,ldesc:'Beginner',
+       problem:'Aurora costs 20% more than RDS MySQL. Understanding why it is worth it requires knowing the architectural difference.',
+       what:'Deploy both Aurora MySQL and RDS MySQL, run identical workloads, compare: failover time, storage auto-growth, replication lag to read replicas, and max read replicas.',
+       tech:['Aurora','RDS','boto3','CloudWatch'],
+       exam:'Aurora uses a shared distributed storage layer (6 copies across 3 AZs). Failover to Aurora Replica is 30 seconds (just a pointer change). RDS Multi-AZ failover is 60–120 seconds (new instance starts). This difference is critical.'},
+      {title:'Aurora Serverless v2 Auto-Scaling API',level:2,ldesc:'Beginner+',
+       problem:'A development environment costs $150/month idle because the Aurora instance runs 24/7 even with zero traffic at night.',
+       what:'Deploy Aurora Serverless v2 that scales between 0.5 ACU (minimum) and 8 ACU (maximum). Build a load test script and observe ACU scaling in real time. Calculate cost savings vs a fixed db.r5.large.',
+       tech:['Aurora Serverless v2','ACU','Terraform','Python'],
+       exam:'Aurora Serverless v2 scales in increments of 0.5 ACU with no disruption. It does NOT scale to zero (minimum 0.5 ACU). Aurora Serverless v1 could scale to zero but has cold start. Know this distinction.'},
+      {title:'Aurora Global Database Cross-Region Replication',level:3,ldesc:'Intermediate',
+       problem:'A global SaaS product serves users in US and Europe. Database reads from US have 200ms latency in Europe.',
+       what:'Create an Aurora Global Database with primary in us-east-1 and secondary in eu-west-1. Measure replication lag (should be <1 second). Test managed planned failover (makes secondary the new primary in <1 minute).',
+       tech:['Aurora Global DB','Terraform','CloudWatch','Route 53'],
+       exam:'Aurora Global Database replication lag is typically <1 second. RPO <1 second, RTO <1 minute for managed failover. For unplanned failover (region failure): detach the secondary and promote it manually.'},
+      {title:'Aurora Machine Learning Integration',level:4,ldesc:'Intermediate+',
+       problem:'A fraud detection model in SageMaker needs to score transactions in real time from within a SQL query. Calling SageMaker from app code adds complexity.',
+       what:'Enable Aurora ML integration, create a SageMaker endpoint for fraud scoring, and write SQL: SELECT aws_sagemaker_invoke_endpoint(...) for real-time fraud scores directly in SQL queries.',
+       tech:['Aurora ML','SageMaker','SQL','Terraform'],
+       exam:'Aurora ML lets you call SageMaker and Comprehend directly from SQL using built-in functions. This is NOT standard MySQL/PostgreSQL — it is an Aurora-specific feature. Tested in developer integration scenarios.'},
+      {title:'Aurora Zero-ETL Integration with Redshift',level:5,ldesc:'Advanced',
+       problem:'Analysts need near-real-time access to production Aurora data in Redshift for analytics. Current ETL pipeline has 4-hour lag.',
+       what:'Enable Aurora zero-ETL integration to Redshift. Configure the integration, verify data flows in near-real-time. Build a Redshift dashboard comparing analytics query performance vs running the same queries on Aurora.',
+       tech:['Aurora','Redshift','Zero-ETL','SQL','QuickSight'],
+       exam:'Aurora zero-ETL replicates transactional data to Redshift in near-real-time without any ETL pipeline, AWS Glue jobs, or DMS. Currently available for Aurora MySQL 3.05+. This replaces the classic DMS → S3 → Redshift pattern.'},
+    ]
+  },
+  {
+    id:'dynamodb', name:'Amazon DynamoDB', sub:'NoSQL Key-Value Store', icon:'⚡', color:'#3b82f6', cat:'storage',
+    projects:[
+      {title:'DynamoDB Table Design and Access Patterns',level:1,ldesc:'Beginner',
+       problem:'Most DynamoDB pain comes from designing the table first and figuring out access patterns later — the opposite of the correct approach.',
+       what:'Design a DynamoDB table for a social media app: identify 5 access patterns (get user, get user posts, get post comments, get trending posts, get notifications). Map each to PK/SK design. NO SQL — document your design before touching code.',
+       tech:['DynamoDB','Single Table Design','NoSQL Workbench'],
+       exam:'DynamoDB exam questions are about access patterns and key design. Partition key must distribute evenly. Hot partitions (one key getting all traffic) cause throttling. Common mistake: using user_id as PK for a social feed — creates hot partition for popular users.'},
+      {title:'DynamoDB CRUD with Python and Boto3',level:2,ldesc:'Beginner+',
+       problem:'You have designed a DynamoDB table but have never done actual CRUD operations in code.',
+       what:'Implement all DynamoDB operations: PutItem, GetItem, UpdateItem (with UpdateExpression), DeleteItem, Query (with KeyConditionExpression), Scan (avoid in prod), BatchWriteItem (max 25 items). Include error handling for ConditionalCheckFailedException.',
+       tech:['boto3','Python','DynamoDB','ConditionExpression'],
+       exam:'Query uses the partition key and is efficient. Scan reads the ENTIRE table — expensive and slow. Never use Scan in production for large tables. BatchGetItem vs BatchWriteItem: Get=100 items max, Write=25 items max.'},
+      {title:'DynamoDB Streams + Lambda Event Processing',level:3,ldesc:'Intermediate',
+       problem:'When user profile data changes in DynamoDB, 5 downstream services need to be updated. Each service polls DynamoDB every 60 seconds wasting read capacity.',
+       what:'Enable DynamoDB Streams, create a Lambda with the stream as event source (batch size=100), fan out changes to SNS, which notifies 5 SQS queues for downstream services. Test with INSERT, MODIFY, and REMOVE events.',
+       tech:['DynamoDB Streams','Lambda','SNS','SQS','boto3'],
+       exam:'DynamoDB Streams has 4 view types: KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES. For audit trail use NEW_AND_OLD_IMAGES. Stream records are available for 24 hours. Lambda ESM for DynamoDB Streams is shard-based.'},
+      {title:'DynamoDB DAX Caching Layer',level:4,ldesc:'Intermediate+',
+       problem:'A gaming leaderboard DynamoDB table handles 50,000 reads/second. Read capacity costs $800/month. 90% of reads are for the top 100 players (hot keys).',
+       what:'Deploy a DAX cluster (3-node for HA), update the application to use the DAX SDK instead of DynamoDB SDK (minimal code change), measure cache hit rate, and compare monthly cost: DynamoDB reads before vs after DAX.',
+       tech:['DAX','DynamoDB','Python','boto3','Terraform'],
+       exam:'DAX is a write-through cache — writes go to both DAX and DynamoDB. DAX reduces read latency from milliseconds to microseconds. DAX does NOT support Scan or DynamoDB Transactions (as of now). Lives inside your VPC.'},
+      {title:'DynamoDB Global Tables Multi-Region Active-Active',level:5,ldesc:'Advanced',
+       problem:'A global e-commerce platform needs database writes to work from any AWS region with automatic conflict resolution and sub-second replication.',
+       what:'Create DynamoDB Global Tables across us-east-1, eu-west-1, and ap-southeast-1. Build a test harness that writes to all 3 simultaneously and measures replication convergence time. Implement last-writer-wins conflict resolution in the application layer.',
+       tech:['DynamoDB Global Tables','Terraform','Python','Route 53 Latency Routing'],
+       exam:'DynamoDB Global Tables use last-writer-wins conflict resolution based on timestamp. Replication is async with typically <1 second lag. All replicas are read+write (active-active). This is different from Aurora Global DB (active-passive).'},
+    ]
+  },
+  {
+    id:'elasticache', name:'ElastiCache', sub:'Redis & Memcached Managed Cache', icon:'🚀', color:'#3b82f6', cat:'storage',
+    projects:[
+      {title:'ElastiCache Redis vs Memcached Decision Guide',level:1,ldesc:'Beginner',
+       problem:'A team argues over Redis vs Memcached. Without understanding the differences, the wrong choice wastes weeks.',
+       what:'Build a decision matrix: persistence (Redis yes, Memcached no), data structures (Redis: lists/sets/sorted sets, Memcached: strings only), clustering, Multi-AZ, backup. For each use case, pick the right one.',
+       tech:['ElastiCache','Redis','Memcached'],
+       exam:'Redis supports: persistence, pub/sub, Lua scripting, sorted sets (leaderboards), geospatial, cluster mode. Memcached supports: multi-threading, horizontal scaling, simple key-value only. If exam says "leaderboard" → Redis sorted sets.'},
+      {title:'ElastiCache Redis Session Store for Web App',level:2,ldesc:'Beginner+',
+       problem:'A Flask web app stores sessions in-memory. When the second EC2 instance starts, users are randomly logged out because sessions only exist on one server.',
+       what:'Deploy ElastiCache Redis, modify Flask to use redis-py for session storage, test that sessions persist across multiple EC2 instances behind an ALB.',
+       tech:['ElastiCache Redis','Flask','redis-py','ALB','EC2'],
+       exam:'Sticky sessions (ALB session affinity) are an anti-pattern — if the instance dies, session data is lost. Centralised session store (ElastiCache) is the correct pattern. This scenario appears in almost every ElastiCache exam question.'},
+      {title:'ElastiCache Redis Cluster Mode with Sharding',level:3,ldesc:'Intermediate',
+       problem:'A single Redis node holds 50GB of cache data. If it fails, all cache is lost and the origin database is overwhelmed.',
+       what:'Deploy ElastiCache Redis Cluster Mode with 3 shards × 2 replicas each. Implement consistent hashing in the application for key routing. Test failover — one primary fails, replica promotes, and traffic reroutes within 30 seconds.',
+       tech:['Redis Cluster','ElastiCache','Terraform','Python','redis-py'],
+       exam:'Cluster Mode Enabled: data sharded across multiple shards (nodes). Each shard has primary + replicas. Cluster Mode Disabled: single shard, can have read replicas but all writes to one node. For very large datasets, Cluster Mode is required.'},
+      {title:'ElastiCache Cache Invalidation Strategy',level:4,ldesc:'Intermediate+',
+       problem:'Product prices are cached in Redis. When a price changes in RDS, the cache is stale for up to 60 minutes and customers see wrong prices.',
+       what:'Implement 3 cache invalidation patterns: (1) Cache-aside with TTL, (2) Write-through with DynamoDB Streams + Lambda, (3) Event-driven invalidation via SNS. Benchmark each for consistency vs performance trade-off.',
+       tech:['ElastiCache','DynamoDB Streams','Lambda','SNS','Python'],
+       exam:'Cache-aside = app checks cache first, then DB on miss. Write-through = write to cache AND DB simultaneously. Write-behind = write to cache, async write to DB. Write-behind risks data loss if cache fails before DB write.'},
+      {title:'ElastiCache for Real-Time Leaderboard',level:5,ldesc:'Advanced',
+       problem:'A mobile game needs a leaderboard showing the top 1,000 players globally, updating in real-time, with sub-millisecond reads for millions of concurrent players.',
+       what:'Use Redis Sorted Sets (ZADD for score update, ZRANGE/ZREVRANGE for top-N, ZRANK for player rank). Build a Lambda that updates scores from DynamoDB Streams, and an API Gateway + Lambda endpoint for leaderboard queries. Load test at 10,000 concurrent users.',
+       tech:['Redis Sorted Sets','Lambda','API Gateway','DynamoDB','CloudWatch'],
+       exam:'Redis Sorted Sets are the canonical solution for leaderboards. ZADD is O(log N), ZRANGE is O(log N + M). With ElastiCache, leaderboard reads are ~0.1ms vs ~10ms from DynamoDB. This is a frequent DVA exam architectural question.'},
+    ]
+  },
+
+  // ─── MESSAGING ─────────────────────────────────────────────────────────────
+  {
+    id:'sqs', name:'Amazon SQS', sub:'Simple Queue Service', icon:'📨', color:'#10b981', cat:'messaging',
+    projects:[
+      {title:'SQS Queue Types: Standard vs FIFO',level:1,ldesc:'Beginner',
+       problem:'A team chose SQS Standard for an order processing system. Orders are now processed in wrong order causing payment errors.',
+       what:'Create both queue types. Send 100 messages with sequence numbers to Standard and observe out-of-order delivery. Do the same with FIFO and verify perfect ordering. Document when to use each.',
+       tech:['SQS','Python','boto3'],
+       exam:'Standard Queue: at-least-once delivery, best-effort ordering, unlimited throughput. FIFO Queue: exactly-once processing, strict ordering, 3,000 msg/sec with batching. FIFO queue names must end with .fifo.'},
+      {title:'SQS Dead Letter Queue with Alerting',level:2,ldesc:'Beginner+',
+       problem:'Messages fail processing silently. After 3 retries they disappear — nobody knows.',
+       what:'Create SQS queue + DLQ. Set maxReceiveCount=3. Write a consumer that randomly fails 20% of messages. Deploy CloudWatch alarm on ApproximateNumberOfMessagesVisible for the DLQ. Send SNS alert to email.',
+       tech:['SQS DLQ','CloudWatch Alarm','SNS','Python','Terraform'],
+       exam:'DLQ must be same type as source queue (Standard DLQ for Standard, FIFO DLQ for FIFO). Message retention in DLQ should be LONGER than source queue so you have time to debug. DLQ redrive: replay messages back to source after fixing the bug.'},
+      {title:'SQS Lambda Trigger with Batch Processing',level:3,ldesc:'Intermediate',
+       problem:'Lambda is invoked for every single SQS message. At 10,000 messages/minute, Lambda costs are 10x what they should be.',
+       what:'Configure Lambda ESM with batchSize=10, reportBatchItemFailures=true. Write Lambda that processes batches and correctly returns failed message IDs (not failing the whole batch). Compare Lambda invocation count: 1:1 vs batched.',
+       tech:['SQS','Lambda','ESM','batchSize','Python'],
+       exam:'reportBatchItemFailures is critical: without it, one failed message in a batch of 10 retries ALL 10. With it, only the failed message ID is returned to SQS for retry. Always enable this in production.'},
+      {title:'SQS Fan-Out Pattern with SNS',level:4,ldesc:'Intermediate+',
+       problem:'An order service needs to notify 4 downstream services (inventory, shipping, billing, analytics) when an order is placed. Calling each service directly couples the order service to all 4.',
+       what:'Build SNS topic → 4 SQS queues (fan-out). Each queue has its own Lambda consumer. Test that all 4 consumers receive every order. Add SQS filter policies so billing only gets paid orders.',
+       tech:['SNS','SQS','Lambda','Filter Policy','Terraform'],
+       exam:'SNS→SQS fan-out is the canonical pattern for decoupled microservices. SNS subscription filter policies use message attributes (not message body for standard SNS). This architecture appears in ~20% of DVA exam questions.'},
+      {title:'SQS Visibility Timeout Optimization for Long Processing',level:5,ldesc:'Advanced',
+       problem:'SQS messages take between 30 seconds and 8 minutes to process. A fixed visibility timeout means long jobs cause duplicate processing.',
+       what:'Build a processor that dynamically extends visibility timeout (ChangeMessageVisibility) based on estimated remaining work. Implement heartbeat pattern: extend every 30 seconds while processing. Handle Lambda 15-minute limit with ECS Fargate for jobs > 15 minutes.',
+       tech:['SQS','Lambda','ECS Fargate','ChangeMessageVisibility','Python'],
+       exam:'Visibility timeout range: 0 seconds to 12 hours. If processing time > visibility timeout, the message becomes visible again and is processed by another consumer (duplicate). Always extend visibility timeout for long-running jobs.'},
+    ]
+  },
+  {
+    id:'sns', name:'Amazon SNS', sub:'Simple Notification Service', icon:'🔔', color:'#10b981', cat:'messaging',
+    projects:[
+      {title:'SNS Topic — Publish to Email and SMS',level:1,ldesc:'Beginner',
+       problem:'A DevOps team needs to send alerts to multiple people (email + SMS) without writing separate notification code for each channel.',
+       what:'Create an SNS standard topic, add email + SMS subscriptions, publish a test alarm message via AWS CLI and boto3. Observe all subscribers receive the same message simultaneously.',
+       tech:['SNS','boto3','AWS CLI','Python'],
+       exam:'SNS is push-based (it pushes to subscribers). SQS is pull-based (consumers poll). SNS supports: Email, SMS, HTTP/S, SQS, Lambda, mobile push (APNS/GCM), Kinesis Firehose. Each protocol has different delivery guarantees.'},
+      {title:'SNS Filter Policies for Selective Message Routing',level:2,ldesc:'Beginner+',
+       problem:'All microservices subscribe to the same SNS topic but receive irrelevant messages, processing and discarding 90% of messages.',
+       what:'Create SNS topic with message attributes (event_type, region, severity). Add filter policies to each SQS subscription so billing service only gets payment events, ops team only gets CRITICAL alerts from us-east-1.',
+       tech:['SNS Filter Policy','SQS','JSON','boto3'],
+       exam:'SNS filter policies are JSON and match message attributes (NOT message body). String matching, prefix matching, numeric range all supported. A subscription with no filter policy receives ALL messages. Filtering reduces cost significantly.'},
+      {title:'SNS Mobile Push Notification Service',level:3,ldesc:'Intermediate',
+       problem:'A mobile app needs to send push notifications to iOS and Android users. Building separate APNs and GCM integrations doubles the work.',
+       what:'Create an SNS application endpoint for both APNS (iOS) and GCM/FCM (Android). Build a Lambda that registers device tokens on user login, sends targeted push notifications, and handles token invalidation (inactive tokens).',
+       tech:['SNS Mobile Push','APNS','FCM','Lambda','DynamoDB'],
+       exam:'SNS mobile push requires: create platform application (with APNS/GCM credentials), create platform endpoint per device, publish to endpoint ARN. The SNS topic fan-out to platform application is a common DVA exam pattern.'},
+      {title:'SNS FIFO Topic for Ordered Event Processing',level:4,ldesc:'Intermediate+',
+       problem:'An inventory system publishes stock updates to SNS but processes them out of order causing negative stock counts.',
+       what:'Migrate from Standard SNS topic to SNS FIFO topic. Add message group IDs per product SKU (ensures ordering within a group). Connect to SQS FIFO queues. Verify that for each SKU, stock updates are processed in exact order.',
+       tech:['SNS FIFO','SQS FIFO','Message Group ID','Terraform'],
+       exam:'SNS FIFO topics only support SQS FIFO queues as subscribers (no email, Lambda, HTTP). Message Group ID = ordering key. Messages with the same group ID are processed in order. FIFO SNS has 300 msg/sec hard limit.'},
+      {title:'SNS + EventBridge Integration Hub',level:5,ldesc:'Advanced',
+       problem:'A company has 20 SNS topics for different event types. Adding new consumers requires changes to every topic — unscalable.',
+       what:'Build an event integration hub: all services publish to SNS topics, EventBridge subscribes to SNS and applies routing rules, enriches events with metadata, routes to correct SQS, Lambda, Step Functions, or external SaaS targets based on event patterns.',
+       tech:['SNS','EventBridge','Step Functions','Lambda','Terraform'],
+       exam:'EventBridge can subscribe to SNS topics. This is a powerful pattern: SNS handles fan-out, EventBridge handles complex routing, filtering, and transformation. EventBridge event buses can also be shared across accounts.'},
+    ]
+  },
+  {
+    id:'kinesis', name:'Amazon Kinesis', sub:'Real-Time Data Streaming', icon:'🌊', color:'#10b981', cat:'messaging',
+    projects:[
+      {title:'Kinesis Data Streams Fundamentals',level:1,ldesc:'Beginner',
+       problem:'You need to process 100,000 events per second from IoT sensors. SQS can work but loses ordering per sensor.',
+       what:'Create a Kinesis stream with 4 shards. Write a producer that sends sensor events with sensorId as partition key. Write a consumer using the Kinesis SDK that reads from each shard. Observe per-shard ordering.',
+       tech:['Kinesis Data Streams','Python','boto3','KCL'],
+       exam:'Each Kinesis shard: 1MB/sec write, 2MB/sec read. Partition key determines shard assignment (consistent hash). Records within a shard are strictly ordered. Retention: 1–365 days (default 24h). Hot shards: one partition key hitting one shard repeatedly.'},
+      {title:'Kinesis Firehose to S3 with Transformation',level:2,ldesc:'Beginner+',
+       problem:'Application logs need to land in S3 for analysis but the raw format is uncompressed JSON. Athena queries cost 5x more than necessary.',
+       what:'Create a Kinesis Firehose delivery stream: source = Kinesis Data Stream, transformation Lambda (add timestamp, convert to Parquet), destination = S3 with dynamic partitioning by date (YYYY/MM/DD/). Query with Athena.',
+       tech:['Kinesis Firehose','Lambda Transformation','S3','Parquet','Athena'],
+       exam:'Kinesis Firehose is fully managed — no consumer code needed. Buffer hints: data is batched before delivery (size: 1–128MB, interval: 60–900s). Firehose can transform records via Lambda BEFORE delivery to S3/Redshift/OpenSearch.'},
+      {title:'Kinesis Data Analytics SQL for Real-Time Anomaly Detection',level:3,ldesc:'Intermediate',
+       problem:'A payment system needs to detect unusually high transaction amounts in real time, not in hourly batch jobs.',
+       what:'Create a Kinesis Data Analytics application with a SQL query: sliding window of 5 minutes, flag transactions > 3 standard deviations above the mean. Output anomalies to a separate stream → Lambda → SNS alert.',
+       tech:['Kinesis Data Analytics','SQL','Sliding Window','Lambda','SNS'],
+       exam:'Kinesis Data Analytics supports tumbling windows (non-overlapping), sliding windows (overlapping), and stagger windows (late-arriving data). SQL runs continuously against the stream. Output goes to Kinesis Stream, Firehose, or Lambda.'},
+      {title:'Kinesis Enhanced Fan-Out for Multiple Consumers',level:4,ldesc:'Intermediate+',
+       problem:'3 Lambda functions share one Kinesis stream shard (2MB/sec). Each gets only 666KB/sec. At scale they fall behind.',
+       what:'Enable Enhanced Fan-Out on the Kinesis stream. Register each Lambda as a dedicated consumer. Verify each consumer now gets the full 2MB/sec per shard independently. Compare latency: polling (200ms avg) vs EFO (70ms avg).',
+       tech:['Kinesis EFO','Lambda','CloudWatch','KCL 2.x'],
+       exam:'Enhanced Fan-Out: each registered consumer gets its own 2MB/sec pipe (not shared). Uses HTTP/2 push instead of pull polling. Costs $0.015/shard-hour extra. Required when multiple consumers need low latency from the same stream.'},
+      {title:'Real-Time Clickstream Analytics Pipeline',level:5,ldesc:'Advanced',
+       problem:'An e-commerce site needs to personalise product recommendations within 2 seconds of a user clicking. Batch processing (hourly) is too slow.',
+       what:'Full pipeline: API Gateway → Kinesis Data Streams → Kinesis Data Analytics (real-time session stitching) → Lambda (update user session profile in ElastiCache) → DynamoDB (persist). Dashboard via WebSocket API Gateway showing live session metrics.',
+       tech:['Kinesis','API Gateway WebSocket','ElastiCache','DynamoDB','Lambda'],
+       exam:'Kinesis Data Streams is for real-time processing (milliseconds). Kinesis Firehose is for near-real-time delivery (60+ seconds). Never use Firehose when you need sub-second processing — it buffers by design.'},
+    ]
+  },
+
+  // ─── NETWORKING ────────────────────────────────────────────────────────────
+  {
+    id:'alb', name:'Elastic Load Balancing', sub:'ALB · NLB · CLB', icon:'⚖️', color:'#8b5cf6', cat:'compute',
+    projects:[
+      {title:'ALB Path-Based Routing Setup',level:1,ldesc:'Beginner',
+       problem:'A monolith is being split into microservices. All traffic hits one EC2 instance. New services need traffic routed by URL path.',
+       what:'Create an ALB with 3 listener rules: /api/* → API service target group, /images/* → static service target group, default → main app target group. Verify correct routing with curl.',
+       tech:['ALB','Target Groups','Terraform','EC2'],
+       exam:'ALB rules are evaluated in priority order (lowest number first). The default rule (no condition) is always last. Conditions: path-pattern, host-header, http-method, source-ip, http-header, query-string.'},
+      {title:'ALB Host-Based Routing for Multi-Tenant SaaS',level:2,ldesc:'Beginner+',
+       problem:'A SaaS product serves tenant1.app.com and tenant2.app.com from one ALB but needs different backend services per tenant.',
+       what:'Configure ALB host-based routing rules to route *.tenant1.app.com to tenant1 ECS service and *.tenant2.app.com to tenant2 ECS service. Use wildcard hostname conditions.',
+       tech:['ALB','Host-Based Routing','ECS','Route 53','ACM'],
+       exam:'ALB supports wildcard host headers: *.example.com matches all subdomains. You need an ACM wildcard certificate *.example.com to handle HTTPS for all subdomains on one ALB listener.'},
+      {title:'ALB Sticky Sessions and Session Affinity',level:3,ldesc:'Intermediate',
+       problem:'A shopping cart web app breaks when requests round-robin to different instances because the cart is stored in in-memory session.',
+       what:'Enable ALB sticky sessions (duration-based: 1 hour). Test that the same user always hits the same instance. Then migrate cart to ElastiCache and disable sticky sessions — test that any instance can serve any user.',
+       tech:['ALB Sticky Sessions','ElastiCache','EC2','Python'],
+       exam:'Sticky sessions use a cookie (AWSALB). They create a hot spot if users are long-lived — one instance gets overloaded. Sticky sessions are a short-term fix. Centralised session store (ElastiCache) is the correct long-term solution.'},
+      {title:'NLB for High-Performance TCP Load Balancing',level:4,ldesc:'Intermediate+',
+       problem:'A multiplayer game server needs ultra-low latency TCP load balancing. ALB adds 5–10ms of HTTP overhead that is unacceptable.',
+       what:'Deploy an NLB with TCP listeners on UDP 7777 (game protocol). Configure target groups with EC2 instances. Compare latency: ALB (HTTP) vs NLB (TCP). Assign an Elastic IP to the NLB for a static IP.',
+       tech:['NLB','TCP/UDP','Elastic IP','Terraform'],
+       exam:'NLB: Layer 4 (TCP/UDP), static IP per AZ, millions of requests/sec, ultra-low latency. ALB: Layer 7 (HTTP/HTTPS), content-based routing, WAF integration, slower. NLB preserves the client IP address to the target (ALB replaces it with its own).'},
+      {title:'ALB + WAF + Shield Advanced DDoS Protection',level:5,ldesc:'Advanced',
+       problem:'A high-profile news website gets DDoS attacked during major events. The ALB gets overwhelmed, costing $10,000 in bandwidth and causing 2-hour outages.',
+       what:'Attach WAF to ALB with rules: rate limit by IP (2,000 req/5min), block known bad IPs (managed rule groups), SQL injection protection, geo-blocking for regions with no users. Enable Shield Advanced for DDoS protection and 24/7 DRT support.',
+       tech:['WAF','Shield Advanced','ALB','CloudFront','Terraform'],
+       exam:'WAF is a Layer 7 firewall (can inspect HTTP body, headers, URI). Can be attached to ALB, API Gateway, AppSync, or CloudFront. Shield Standard is free (always on). Shield Advanced costs $3,000/month but provides DDoS cost protection and DRT access.'},
+    ]
+  },
+  {
+    id:'cloudfront', name:'Amazon CloudFront', sub:'Global CDN', icon:'🌍', color:'#8b5cf6', cat:'compute',
+    projects:[
+      {title:'CloudFront Distribution for S3 Static Site',level:1,ldesc:'Beginner',
+       problem:'An S3-hosted website loads in 3 seconds for users in India because the bucket is in us-east-1.',
+       what:'Create a CloudFront distribution in front of an S3 bucket (Origin Access Control — not public S3). Add custom domain, ACM certificate, HTTP → HTTPS redirect. Measure load time improvement from different regions.',
+       tech:['CloudFront','S3','OAC','ACM','Route 53'],
+       exam:'OAC (Origin Access Control) replaced OAI (Origin Access Identity). OAC supports S3, MediaStore, and API Gateway. With OAC, S3 bucket policy allows only CloudFront service principal — the bucket stays private.'},
+      {title:'CloudFront Cache Behaviors and TTL Control',level:2,ldesc:'Beginner+',
+       problem:'An API returns both static (images) and dynamic (user data) content. Caching API responses serves stale data to users.',
+       what:'Configure 3 CloudFront cache behaviors: /static/* (TTL 1 year, compress=true), /api/* (TTL 0, forward all headers), /* default (TTL 1 day). Test that API responses bypass cache.',
+       tech:['CloudFront Cache Behaviors','Cache Policies','TTL','Terraform'],
+       exam:'Cache behavior precedence: most specific path pattern wins. /api/* takes priority over /*. TTL 0 does NOT bypass CloudFront — it still goes to origin for every request but CloudFront still terminates the TCP connection (benefits: SSL offload, HTTP/2).'},
+      {title:'CloudFront Lambda@Edge for A/B Testing',level:3,ldesc:'Intermediate',
+       problem:'A marketing team wants to A/B test two homepage designs but the web server is a simple static S3 site that cannot run server-side logic.',
+       what:'Deploy a Lambda@Edge function at the Viewer Request event. It reads a cookie: if absent, randomly assign A or B (50/50), set cookie, redirect to /v1/ or /v2/ path. Log experiment data to CloudWatch.',
+       tech:['Lambda@Edge','CloudFront','A/B Testing','Cookies','CloudWatch'],
+       exam:'Lambda@Edge runs at CloudFront edge locations. 4 event types: Viewer Request, Viewer Response, Origin Request, Origin Response. Viewer Request = closest to user (lowest latency). Lambda@Edge is us-east-1 only and is replicated globally automatically.'},
+      {title:'CloudFront Signed URLs for Premium Content',level:4,ldesc:'Intermediate+',
+       problem:'A video streaming platform has premium content in S3. Currently the S3 URLs are guessed by users sharing links, bypassing paywall.',
+       what:'Generate CloudFront signed URLs (with expiry + IP restriction) in a Lambda function after payment verification. Configure trusted key groups. Test that unsigned requests return 403, signed URLs work, and expired URLs return 403.',
+       tech:['CloudFront Signed URLs','Key Groups','Lambda','S3','Python cryptography'],
+       exam:'Signed URLs: access to individual files with expiry + IP restriction. Signed Cookies: access to multiple files (whole premium section) — better for streaming. Use Signed URLs when the URL is embedded in a download link.'},
+      {title:'CloudFront Real-Time Logs + Analytics Dashboard',level:5,ldesc:'Advanced',
+       problem:'Marketing needs to see real-time geographic distribution of website traffic and top pages accessed. Current CloudWatch metrics are 5-minute delayed.',
+       what:'Enable CloudFront real-time logs (Kinesis Data Streams → Kinesis Firehose → S3 Parquet). Build Athena queries for: top 10 pages/hour, cache hit ratio by behavior, error rate by country. Create QuickSight dashboard refreshing every 60 seconds.',
+       tech:['CloudFront Real-Time Logs','Kinesis','Firehose','Athena','QuickSight'],
+       exam:'CloudFront standard logs: batch delivery to S3 (delayed 1–24 hours). CloudFront real-time logs: Kinesis Data Streams, near real-time. Real-time logs have configurable sampling rate (1–100%) and field selection.'},
+    ]
+  },
+  {
+    id:'route53', name:'Amazon Route 53', sub:'DNS & Traffic Management', icon:'🔀', color:'#8b5cf6', cat:'compute',
+    projects:[
+      {title:'Route 53 Routing Policies Comparison',level:1,ldesc:'Beginner',
+       problem:'A team uses only Simple routing for everything and does not know what Weighted, Latency, Failover, or Geolocation do.',
+       what:'Create DNS records demonstrating all 7 routing policies: Simple, Weighted (80/20 split), Latency-based (2 regions), Failover (primary+secondary), Geolocation (US→US instance), Geoproximity, Multivalue.',
+       tech:['Route 53','EC2','Terraform','Health Checks'],
+       exam:'Failover routing requires health checks. Geolocation routes by user location. Latency routes to lowest latency region (not closest geographically). Geoproximity allows bias — you can expand/shrink traffic going to a region.'},
+      {title:'Route 53 Health Checks and DNS Failover',level:2,ldesc:'Beginner+',
+       problem:'Primary EC2 instance goes down at 3am. DNS still points to dead IP for 24 hours until someone manually changes it.',
+       what:'Configure Route 53 health check on the primary endpoint (HTTP:80/health every 10 seconds). Create Failover routing policy: primary with health check, secondary pointing to an S3 static error page. Kill primary — verify DNS switches automatically.',
+       tech:['Route 53 Health Checks','Failover Routing','S3','EC2'],
+       exam:'Route 53 health checkers come from ~15 global regions. An endpoint is unhealthy when >18% of checkers report failure. Health check interval: 30s (standard) or 10s (fast, more expensive). Fast health checks are needed for sub-minute failover.'},
+      {title:'Route 53 Alias Records vs CNAME',level:3,ldesc:'Intermediate',
+       problem:'A developer creates a CNAME for the root domain (example.com → alb.us-east-1.elb.amazonaws.com). It does not work. DNS rejects CNAMEs at root.',
+       what:'Demonstrate why CNAME fails at zone apex. Create an Alias record (Route 53 specific) pointing example.com to ALB. Verify it works. Document: Alias records are free, resolve at AWS level, and support zone apex.',
+       tech:['Route 53 Alias','ALB','CloudFront','S3 Website'],
+       exam:'CNAME cannot be at zone apex (root domain). Route 53 Alias records CAN be at zone apex. Alias records are FREE (unlike CNAME which charges for queries). Alias records support: ALB, NLB, CloudFront, API Gateway, S3 Website endpoints.'},
+      {title:'Private Hosted Zone for VPC Service Discovery',level:4,ldesc:'Intermediate+',
+       problem:'Microservices in different subnets use hardcoded IP addresses to call each other. When an EC2 IP changes, 10 services need config updates.',
+       what:'Create a Route 53 private hosted zone (internal.company.com) associated with the VPC. Register each microservice with a predictable DNS name (payment.internal.company.com). Enable DNS hostnames and DNS resolution in the VPC.',
+       tech:['Route 53 Private Zone','VPC','Terraform','EC2'],
+       exam:'Private hosted zones are only resolvable within associated VPCs. You must enable enableDnsHostnames and enableDnsSupport on the VPC. Private zones can be associated with multiple VPCs (even across accounts with cross-account association).'},
+      {title:'Route 53 Resolver for Hybrid DNS',level:5,ldesc:'Advanced',
+       problem:'A company has on-premise servers (using on-prem DNS) and AWS resources. Neither can resolve the other\'s DNS names — hybrid connectivity is broken.',
+       what:'Deploy Route 53 Resolver Inbound Endpoint (on-prem DNS forwards AWS queries to this) and Outbound Endpoint (Route 53 forwards on-prem domain queries to on-prem DNS). Configure forwarding rules. Test cross-environment DNS resolution.',
+       tech:['Route 53 Resolver','Direct Connect/VPN','Terraform','On-prem DNS'],
+       exam:'Route 53 Resolver Inbound: allows on-prem to resolve Route 53 private zones. Route 53 Resolver Outbound: allows AWS to resolve on-prem DNS names. Resolver Endpoints live in your VPC (they have IPs in your subnets).'},
+    ]
+  },
+
+  // ─── SECURITY ──────────────────────────────────────────────────────────────
+  {
+    id:'iam', name:'AWS IAM', sub:'Identity & Access Management', icon:'🔐', color:'#ef4444', cat:'security',
+    projects:[
+      {title:'IAM Policies: Identity vs Resource-Based',level:1,ldesc:'Beginner',
+       problem:'A developer gets AccessDenied on S3 and does not understand if the problem is in IAM policy, S3 bucket policy, or both.',
+       what:'Create an IAM user with a deny policy for S3. Create a bucket with a bucket policy allowing that user. Test all combinations: identity allow + resource deny, identity deny + resource allow, both allow. Document how IAM evaluation logic works.',
+       tech:['IAM','S3 Bucket Policy','AWS CLI','Python'],
+       exam:'IAM evaluation order: explicit DENY wins (from any policy). Then check if there is an explicit ALLOW. Default is DENY. For cross-account: BOTH the identity policy in account A AND the resource policy in account B must allow the action.'},
+      {title:'IAM Roles for EC2 Instance Profile',level:2,ldesc:'Beginner+',
+       problem:'A developer hardcodes AWS_ACCESS_KEY_ID in an EC2 instance environment variable. The key leaks in a git commit. Security incident.',
+       what:'Create an IAM role with least-privilege S3 read policy. Attach it as an instance profile to EC2. Show how the SDK automatically uses the metadata service (169.254.169.254) for credentials. Delete all hardcoded keys.',
+       tech:['IAM Role','Instance Profile','EC2 Metadata','boto3'],
+       exam:'Never hardcode credentials in EC2. Instance profiles deliver temporary credentials via IMDS (Instance Metadata Service). Credentials rotate automatically every hour. IMDSv2 is more secure — requires session-oriented requests.'},
+      {title:'IAM Permission Boundaries',level:3,ldesc:'Intermediate',
+       problem:'A developer is given AdministratorAccess and accidentally gives their Lambda function an S3 full access policy — now Lambda can read all company data.',
+       what:'Create a Permission Boundary that limits maximum permissions to only the services the developer needs. Attach boundary to the developer\'s role. Test: developer cannot grant permissions beyond the boundary even with AdministratorAccess.',
+       tech:['IAM Permission Boundary','SCPs','Terraform'],
+       exam:'Permission Boundary defines the MAXIMUM permissions an identity can have. Effective permission = intersection of identity policy AND permission boundary. SCPs (Service Control Policies) work the same way but at the account/OU level in AWS Organizations.'},
+      {title:'IAM Access Analyzer for Least Privilege',level:4,ldesc:'Intermediate+',
+       problem:'Lambda functions have overly broad IAM policies (s3:* on *). Real required permissions are unknown after years of permission accumulation.',
+       what:'Enable IAM Access Analyzer. Deploy a Lambda with broad permissions. Run it for 1 week (Access Analyzer observes CloudTrail). Use the generated policy recommendations to create a minimal policy with only actually-used permissions.',
+       tech:['IAM Access Analyzer','CloudTrail','Lambda','Terraform'],
+       exam:'IAM Access Analyzer has two modes: (1) External access analyzer — finds resources shared outside your account. (2) Unused access analyzer — finds unused roles, policies, and permissions. Policy generation creates a least-privilege policy from CloudTrail activity.'},
+      {title:'Cross-Account Role Assumption with External ID',level:5,ldesc:'Advanced',
+       problem:'A third-party SaaS vendor needs read access to your S3 bucket. Giving them an IAM user with static credentials is insecure.',
+       what:'Create a cross-account IAM role with an External ID condition (confused deputy protection). Provide the role ARN to the vendor. Build a demo of the vendor assuming the role with sts:AssumeRole and using the External ID. Rotate the External ID quarterly.',
+       tech:['IAM STS','AssumeRole','External ID','Cross-Account','Terraform'],
+       exam:'External ID prevents the confused deputy problem: a malicious third party cannot assume your role by pretending to be your vendor. The condition: aws:ExternalId = "your-secret-id" must be in the trust policy. External ID should be unique per customer.'},
+    ]
+  },
+  {
+    id:'kms', name:'AWS KMS', sub:'Key Management Service', icon:'🗝️', color:'#ef4444', cat:'security',
+    projects:[
+      {title:'KMS CMK Creation and Key Policies',level:1,ldesc:'Beginner',
+       problem:'A team uses AWS managed keys for S3 encryption but cannot control who can use the key or audit key usage.',
+       what:'Create a Customer Managed Key (CMK) with a key policy that allows: key admin (full access), key user (encrypt/decrypt only), and no one else. Encrypt an S3 object with the CMK. View CloudTrail logs for key usage.',
+       tech:['KMS','CMK','Key Policy','S3','CloudTrail'],
+       exam:'KMS key policy is required — unlike IAM, KMS does not default to account root access. Without a key policy statement allowing the account root, even the account owner cannot use the key. This is a common exam gotcha.'},
+      {title:'KMS Envelope Encryption',level:2,ldesc:'Beginner+',
+       problem:'Encrypting 10GB files with KMS directly is rejected — KMS only encrypts up to 4KB. The team does not understand envelope encryption.',
+       what:'Implement envelope encryption manually: (1) Call KMS GenerateDataKey to get plaintext + encrypted DEK. (2) Encrypt the large file with the plaintext DEK using AES-256. (3) Store encrypted file + encrypted DEK together. (4) Decrypt: call KMS Decrypt on DEK, then decrypt file.',
+       tech:['KMS','Envelope Encryption','Python cryptography','boto3'],
+       exam:'Envelope encryption is how all AWS services use KMS. KMS CMK encrypts the Data Encryption Key (DEK). The DEK encrypts actual data. This way KMS never sees your data — only the DEK. GenerateDataKey returns BOTH plaintext DEK and encrypted DEK.'},
+      {title:'KMS Multi-Region Keys for Cross-Region Encryption',level:3,ldesc:'Intermediate',
+       problem:'An app in us-east-1 encrypts data and replicates it to eu-west-1. Decryption in EU fails because the KMS key only exists in US.',
+       what:'Create a KMS Multi-Region primary key in us-east-1, replicate it to eu-west-1. Encrypt data in US, transfer encrypted data to EU, decrypt in EU without re-encrypting. Verify the same key ID appears in both regions.',
+       tech:['KMS Multi-Region Keys','S3 Replication','boto3','Terraform'],
+       exam:'KMS Multi-Region Keys have the same key material and key ID in multiple regions. You can encrypt in one region and decrypt in another without API calls to the original region. Essential for active-active multi-region architectures.'},
+      {title:'KMS Key Rotation and Secret Rotation',level:4,ldesc:'Intermediate+',
+       problem:'A compliance audit requires all encryption keys to be rotated annually. The team manually rotates keys causing downtime.',
+       what:'Enable automatic annual key rotation for CMK. Build a Lambda triggered by Secrets Manager rotation that: re-encrypts all S3 objects with the new key version, updates the key alias, sends SNS notification. Key rotation should be zero-downtime.',
+       tech:['KMS Key Rotation','Secrets Manager','Lambda','S3','CloudTrail'],
+       exam:'Automatic KMS key rotation creates new key material annually but keeps the old key material to decrypt data encrypted with previous versions. The same CMK ID is used — applications do not need updating. Only CMKs support automatic rotation (AWS managed keys rotate every 3 years).'},
+      {title:'KMS Grants for Temporary Key Access Delegation',level:5,ldesc:'Advanced',
+       problem:'A batch processing job run by an EC2 spot instance needs temporary KMS decrypt access. Adding/removing IAM policies for each job run is operationally expensive.',
+       what:'Build a system using KMS Grants: the job coordinator creates a KMS grant giving the spot instance role decrypt-only access with constraints. On job completion, the coordinator retires the grant. No IAM policy changes needed.',
+       tech:['KMS Grants','IAM','EC2 Spot','Lambda','boto3'],
+       exam:'KMS Grants allow temporary and programmatic delegation of key access without modifying key policies or IAM policies. Grants are immediately revocable. Grant constraints can limit usage context (e.g., only for a specific operation). Grants are suitable for vended secrets patterns.'},
+    ]
+  },
+  {
+    id:'cognito', name:'Amazon Cognito', sub:'User Authentication & Authorization', icon:'👤', color:'#ef4444', cat:'security',
+    projects:[
+      {title:'Cognito User Pool — Sign Up and Sign In',level:1,ldesc:'Beginner',
+       problem:'A web app has a custom authentication system built from scratch — hashing passwords in a PostgreSQL users table. Security audit found 3 vulnerabilities.',
+       what:'Create a Cognito User Pool with email verification, password policy (12 chars, complexity), and MFA (TOTP). Build a React login/signup page using Amplify Auth library. Replace the custom auth entirely.',
+       tech:['Cognito User Pool','Amplify','React','JWT'],
+       exam:'Cognito User Pool = user directory (handles auth). Returns JWT tokens: ID token (user attributes), Access token (scopes), Refresh token (get new tokens). User Pool does NOT give AWS credentials — that requires Identity Pool.'},
+      {title:'Cognito Identity Pool for AWS Credentials',level:2,ldesc:'Beginner+',
+       problem:'A mobile app needs to upload photos directly to S3. Proxying through a backend API wastes bandwidth and adds latency.',
+       what:'Create a Cognito Identity Pool that accepts User Pool tokens and returns temporary AWS credentials (STS AssumeRoleWithWebIdentity). Configure IAM role that allows s3:PutObject only to the user\'s own folder (s3:prefix = ${cognito-identity.amazonaws.com:sub}).',
+       tech:['Cognito Identity Pool','STS','S3','IAM','Amplify'],
+       exam:'User Pool = who you are (authentication). Identity Pool = what you can do on AWS (authorization via IAM role). The IAM policy for the Identity Pool role can use Cognito variables like ${cognito-identity.amazonaws.com:sub} for fine-grained per-user access.'},
+      {title:'Cognito API Gateway Authorizer',level:3,ldesc:'Intermediate',
+       problem:'An API Gateway endpoint is publicly accessible. Any request with any header can call it.',
+       what:'Add a Cognito Authorizer to API Gateway that validates the Authorization: Bearer JWT header against the User Pool. Test: valid token → 200 OK, expired token → 401, missing token → 401, wrong pool → 403.',
+       tech:['Cognito','API Gateway Authorizer','JWT','Postman','Terraform'],
+       exam:'API Gateway has 2 authorizer types: Cognito (validates JWT, built-in) and Lambda Authorizer (custom logic). Cognito authorizer validates the token signature and expiry automatically. Result is cached for up to 3600 seconds to reduce Cognito API calls.'},
+      {title:'Cognito Hosted UI with Social Login',level:4,ldesc:'Intermediate+',
+       problem:'Users complain about creating yet another password for the app. 40% abandon signup when they see the password form.',
+       what:'Configure Cognito Hosted UI. Add Google OAuth2 identity provider. Add Facebook OAuth2 provider. Map social profile attributes (email, name, picture) to Cognito user attributes. Test the full OAuth2 PKCE flow.',
+       tech:['Cognito Hosted UI','OAuth2','PKCE','Google OAuth','Facebook Login'],
+       exam:'Cognito Hosted UI implements OAuth2 authorization code flow. PKCE (Proof Key for Code Exchange) is required for public clients (mobile/SPA) because they cannot store client_secret securely. Cognito handles token exchange automatically.'},
+      {title:'Cognito Lambda Triggers for Custom Auth Flow',level:5,ldesc:'Advanced',
+       problem:'A banking app needs a custom authentication flow: username/password + SMS OTP + device fingerprint check — none of which Cognito supports natively.',
+       what:'Build a custom auth flow using Cognito Lambda Triggers: PreAuthentication (device check), DefineAuthChallenge (orchestrate steps), CreateAuthChallenge (generate OTP), VerifyAuthChallenge (validate OTP). Implement in Python Lambda functions.',
+       tech:['Cognito Lambda Triggers','Custom Auth Flow','SMS OTP','Lambda','Python'],
+       exam:'Cognito Lambda Triggers: PreSignUp, PostConfirmation, PreAuthentication, DefineAuthChallenge, CreateAuthChallenge, VerifyAuthChallenge, PostAuthentication, PreTokenGeneration (modify claims). The DEFINE→CREATE→VERIFY cycle repeats for multi-step auth.'},
+    ]
+  },
+
+  // ─── DEVOPS ────────────────────────────────────────────────────────────────
+  {
+    id:'cloudformation', name:'AWS CloudFormation', sub:'Infrastructure as Code', icon:'🏗️', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'Your First CloudFormation Template',level:1,ldesc:'Beginner',
+       problem:'A developer clicks through the AWS console to create resources. Next week, nothing is reproducible and the environment cannot be cloned.',
+       what:'Write a CloudFormation template (YAML) that creates: VPC, 2 subnets, EC2 instance with security group, Outputs section. Deploy with aws cloudformation deploy. Understand stack, resource, and parameter concepts.',
+       tech:['CloudFormation','YAML','AWS CLI','EC2','VPC'],
+       exam:'CloudFormation resources have a Type (AWS::EC2::Instance), Properties, and a logical ID. DeletionPolicy: Retain keeps the resource after stack deletion. DependsOn forces creation order. Ref() returns resource ID, Fn::GetAtt returns attributes.'},
+      {title:'CloudFormation Nested Stacks',level:2,ldesc:'Beginner+',
+       problem:'A single 5,000-line CloudFormation template is unmanageable. One small change requires full template review.',
+       what:'Refactor a monolithic template into nested stacks: network-stack.yaml (VPC/subnets), security-stack.yaml (SGs/IAM), app-stack.yaml (EC2/ALB). Parent stack references children via AWS::CloudFormation::Stack. Test update propagation.',
+       tech:['CloudFormation Nested Stacks','S3','YAML','Terraform comparison'],
+       exam:'Nested stack templates must be stored in S3. The parent stack creates nested stacks as resources. Cross-stack references use Exports (Outputs with Export.Name) + Fn::ImportValue in the consuming stack. Exports cannot be deleted while referenced.'},
+      {title:'CloudFormation StackSets for Multi-Account Deployment',level:3,ldesc:'Intermediate',
+       problem:'A security team needs to deploy the same CloudTrail logging configuration to all 47 AWS accounts in the organization. Doing it manually would take a week.',
+       what:'Create a CloudFormation StackSet with AWS Organizations service-managed permissions. Deploy a CloudTrail + S3 logging stack to all accounts in the Security OU simultaneously. Add a new account to the OU and verify the stack is auto-deployed.',
+       tech:['CloudFormation StackSets','AWS Organizations','CloudTrail','Terraform'],
+       exam:'StackSets deploy one template to multiple accounts/regions simultaneously. Service-managed (Organizations) vs self-managed (manual role setup). AutoDeployment: automatically deploy to new accounts joining the target OU.'},
+      {title:'CloudFormation Custom Resources with Lambda',level:4,ldesc:'Intermediate+',
+       problem:'A CloudFormation stack needs to create a resource that AWS CloudFormation does not natively support (e.g., a DNS record in a third-party provider, or a Cognito domain).',
+       what:'Write a CloudFormation Custom Resource backed by a Lambda function. The Lambda receives Create/Update/Delete lifecycle events and provisions the resource. Handle the CloudFormation response URL callback correctly.',
+       tech:['CloudFormation Custom Resource','Lambda','cfn-response','Python'],
+       exam:'Custom Resources must send a response to the CloudFormation-provided presigned S3 URL (ResponseURL) within the CloudFormation timeout (1 hour default). If Lambda does not respond, the stack hangs for 1 hour then times out. Always use cfn-response library.'},
+      {title:'CloudFormation Drift Detection and Compliance',level:5,ldesc:'Advanced',
+       problem:'An auditor discovers that someone manually changed a security group rule in the console 6 months ago. CloudFormation stack shows green but reality is different.',
+       what:'Enable CloudFormation drift detection on all stacks via an EventBridge scheduled rule + Lambda. Store drift reports in DynamoDB. Build a compliance dashboard: stacks drifted today, resources modified outside CF, team responsible. Trigger SNS alert on any drift detection.',
+       tech:['CloudFormation Drift Detection','Lambda','EventBridge','DynamoDB','SNS'],
+       exam:'CloudFormation drift detection compares actual resource configuration to the template. It does NOT auto-remediate — it only reports. Detected drift does not prevent stack operations. Config Rules can also detect drift and trigger SSM Automation for remediation.'},
+    ]
+  },
+  {
+    id:'codecommit', name:'AWS CodeCommit', sub:'Git Repository Service', icon:'📁', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'CodeCommit Repository Setup and Git Workflow',level:1,ldesc:'Beginner',
+       problem:'A team stores code on a personal GitHub account. When the developer leaves, the company loses access to the code.',
+       what:'Create a CodeCommit repository, configure HTTPS/SSH credentials for IAM users, clone repo, create feature branch, open pull request, set up branch protection requiring 1 approver.',
+       tech:['CodeCommit','Git','IAM Git Credentials','AWS CLI'],
+       exam:'CodeCommit uses IAM for authentication. Git credentials for HTTPS are IAM-specific (generate in IAM console). SSH keys are uploaded to IAM user. CodeCommit does NOT support username/password — only IAM credentials or SSH.'},
+      {title:'CodeCommit Triggers and Notifications',level:2,ldesc:'Beginner+',
+       problem:'The team learns about new commits via Slack messages from a bot that checks GitHub every 10 minutes. Delay causes missed reviews.',
+       what:'Set up CodeCommit repository trigger on push to main branch → SNS topic → Lambda that posts a Slack webhook notification with commit details (author, message, files changed).',
+       tech:['CodeCommit Triggers','SNS','Lambda','Slack Webhook','Python'],
+       exam:'CodeCommit Triggers fire on: push, branch creation/deletion. They invoke SNS or Lambda directly. CodeCommit Notifications (EventBridge-based) support more events including: pull request created/updated, comment on PR, approval rule changes.'},
+      {title:'CodeCommit Pull Request Approval Rules',level:3,ldesc:'Intermediate',
+       problem:'Junior developers push directly to main branch. A bad commit broke production. No review process exists.',
+       what:'Create an approval rule template requiring 2 approvers from a specific IAM group (senior-devs). Apply the template to all repositories. Test: create PR, verify it cannot be merged with fewer than 2 approvals.',
+       tech:['CodeCommit Approval Rules','IAM','Pull Requests'],
+       exam:'Approval rule templates can be applied to multiple repositories in an account. Rules can specify: minimum approvals, specific IAM principals who must approve, approval pool (any from IAM group). Template changes apply to new PRs, not existing ones.'},
+      {title:'CodeCommit Cross-Account Replication',level:4,ldesc:'Intermediate+',
+       problem:'A backup account needs a copy of the production CodeCommit repository for disaster recovery. Manual export is error-prone.',
+       what:'Build an automated replication pipeline: CodeCommit push event → EventBridge → Lambda → git clone → push to CodeCommit in DR account. Verify delta-only replication (no full clone on every push).',
+       tech:['CodeCommit','EventBridge','Lambda','Cross-Account IAM','git'],
+       exam:'CodeCommit does not have native cross-account or cross-region replication. The pattern is: EventBridge rule → Lambda function that uses git commands with cross-account role credentials to push to the target repository.'},
+      {title:'Full CI Validation Pipeline on CodeCommit Push',level:5,ldesc:'Advanced',
+       problem:'Broken code is committed to the repo. The only way to find out is when staging deployment fails 20 minutes later.',
+       what:'Build a pipeline triggered on every commit: CodeCommit → EventBridge → CodeBuild (lint + unit tests + security scan with Bandit/Semgrep) → update PR status to PASS/FAIL → block merge if status is FAIL → notify developer via SNS.',
+       tech:['CodeCommit','CodeBuild','EventBridge','SNS','Bandit','Python'],
+       exam:'CodeCommit does not have built-in CI — you connect it to CodePipeline/CodeBuild. The commit status API allows setting PASS/FAIL/PENDING on specific commits, which integrates with PR approval workflows. This is the DVA exam "source stage" pattern.'},
+    ]
+  },
+  {
+    id:'codebuild', name:'AWS CodeBuild', sub:'Managed Build Service', icon:'🔨', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'Your First buildspec.yml',level:1,ldesc:'Beginner',
+       problem:'A developer does not know how CodeBuild works or what buildspec.yml does. Copying examples without understanding them.',
+       what:'Write a buildspec.yml from scratch for a Python app: install phase (pip install), pre_build (run tests), build (create deployment package), post_build (upload artifact to S3). Trigger from CodeCommit push.',
+       tech:['CodeBuild','buildspec.yml','Python','S3 Artifacts'],
+       exam:'buildspec.yml phases: install, pre_build, build, post_build. Each phase has commands and finally blocks. Environment variables can be from CodeBuild config or Secrets Manager/SSM (never hardcode secrets in buildspec). Artifacts section defines what gets uploaded.'},
+      {title:'CodeBuild Docker Image Build and Push',level:2,ldesc:'Beginner+',
+       problem:'Building Docker images requires a build server running 24/7. Cost: $150/month. Builds happen twice a week.',
+       what:'Configure CodeBuild privileged mode (required for Docker). Write buildspec.yml: authenticate to ECR, docker build, docker tag (commit SHA + latest), docker push both tags. Total cost for 2 builds/week: ~$0.10/month.',
+       tech:['CodeBuild','Docker','ECR','buildspec.yml','IAM'],
+       exam:'CodeBuild requires privileged=true to run Docker-in-Docker. Without privileged mode, docker build fails. CodeBuild uses a fresh environment for every build — nothing persists between builds. Use S3 cache or ECR layer caching for faster builds.'},
+      {title:'CodeBuild Cache for Faster Builds',level:3,ldesc:'Intermediate',
+       problem:'A Node.js project takes 4 minutes to build — 3.5 minutes are npm install. With 20 builds/day this wastes 70 minutes and $14/day.',
+       what:'Implement 3 CodeBuild caching strategies: (1) S3 cache for node_modules, (2) Local cache for custom directories, (3) Amazon ECR layer caching for Docker builds. Benchmark build time: baseline vs each cache strategy.',
+       tech:['CodeBuild Cache','S3','Local Cache','Docker Layer Cache'],
+       exam:'CodeBuild cache types: S3 (stored between builds, shared across projects), Local (faster but single-host, lost when build host changes), Docker Layer Cache (build steps cached in layers). S3 cache is the most reliable for dependency caching.'},
+      {title:'CodeBuild VPC Integration for Private Resource Access',level:4,ldesc:'Intermediate+',
+       problem:'A build step needs to run integration tests against a private RDS database. The build fails because CodeBuild cannot reach the DB (inside VPC).',
+       what:'Configure CodeBuild to run inside the VPC: specify VPC ID, subnets, and security group. Verify CodeBuild can connect to private RDS. Also ensure CodeBuild can still pull from internet (NAT Gateway required).',
+       tech:['CodeBuild VPC','RDS','NAT Gateway','Security Groups','Terraform'],
+       exam:'When CodeBuild runs in a VPC, it uses your VPC networking. For internet access (npm install, pip install), you need a NAT Gateway. Without NAT, builds fail trying to download packages. Public CodeBuild builds do not need VPC config.'},
+      {title:'CodeBuild Test Reports and Coverage Badges',level:5,ldesc:'Advanced',
+       problem:'The engineering team cannot tell at a glance if the codebase is healthy. Test results exist in log files but are not trackable over time.',
+       what:'Integrate CodeBuild Test Reports: configure JUnit XML output, upload to CodeBuild Report Group. Track test pass rate over time. Add pytest-cov for coverage, upload to S3. Create a Lambda that updates a GitHub/CodeCommit badge showing current coverage %.',
+       tech:['CodeBuild Reports','JUnit','pytest-cov','Lambda','S3'],
+       exam:'CodeBuild Report Groups display test results in the CodeBuild console with trend over time. Supported formats: JUnit (Java/Python), NUnit (.NET), Cucumber, Visual Studio TRX. Report groups have a retention period (default 30 days).'},
+    ]
+  },
+  {
+    id:'codedeploy', name:'AWS CodeDeploy', sub:'Automated Application Deployment', icon:'🚀', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'CodeDeploy In-Place Deployment on EC2',level:1,ldesc:'Beginner',
+       problem:'Deployment to EC2 means SSHing to each server and running git pull manually. With 6 servers, this takes 30 minutes and introduces human error.',
+       what:'Install CodeDeploy agent on EC2 instances. Create an Application and Deployment Group. Write an appspec.yml with hooks: BeforeInstall (stop service), AfterInstall (set permissions), ApplicationStart (start service). Deploy a new version.',
+       tech:['CodeDeploy','EC2','appspec.yml','IAM','S3'],
+       exam:'CodeDeploy appspec.yml: files section (source→destination), hooks section (lifecycle event scripts). Hooks run as the codedeploy-agent user. Available hooks for EC2: ApplicationStop, DownloadBundle, BeforeInstall, Install, AfterInstall, ApplicationStart, ValidateService.'},
+      {title:'CodeDeploy Deployment Configurations',level:2,ldesc:'Beginner+',
+       problem:'A deployment updates all 10 servers simultaneously. One bug takes all 10 down. Zero instances serve traffic during rollback.',
+       what:'Compare 3 deployment configurations: AllAtOnce (fast, risky), HalfAtATime (50% always up), OneAtATime (safest, slowest). Create a custom config: minimum healthy 80%. Implement automatic rollback on CloudWatch alarm.',
+       tech:['CodeDeploy Configs','CloudWatch Alarm','Rollback','EC2 ASG'],
+       exam:'Deployment configurations: OneAtATime = 1 instance at a time. HalfAtATime = deploys to half fleet. AllAtOnce = all simultaneously (downtime possible). Custom: specify minimum healthy percentage. For Lambda: canary (X% for N minutes, then 100%), linear, all-at-once.'},
+      {title:'CodeDeploy Blue/Green for EC2 ASG',level:3,ldesc:'Intermediate',
+       problem:'The in-place deployment causes 5 minutes of degraded performance while instances are being updated. Users complain about slowness during deployments.',
+       what:'Configure CodeDeploy blue/green: original fleet (blue) serves traffic. New fleet (green) is launched with new code. ALB shifts traffic to green after health checks. Terminate blue fleet after 1 hour (option to roll back within that window).',
+       tech:['CodeDeploy Blue/Green','ASG','ALB','CloudWatch','Terraform'],
+       exam:'Blue/green on EC2 creates a NEW ASG for green fleet. Traffic is shifted via ALB. The original (blue) ASG stays running for the termination wait period (default 1 hour) — you can roll back by shifting traffic back. After termination wait, blue is deleted.'},
+      {title:'CodeDeploy Lambda Deployment with Canary',level:4,ldesc:'Intermediate+',
+       problem:'A Lambda function update breaks the payment flow. The bug affected 100% of users for 3 minutes before rollback — $50k in lost transactions.',
+       what:'Implement CodeDeploy Lambda deployment with Canary10Percent10Minutes: 10% of traffic to new Lambda alias for 10 minutes while monitoring a CloudWatch alarm (error rate). If alarm triggers, automatic rollback to old version. If no alarm, 100% traffic shift.',
+       tech:['CodeDeploy Lambda','Canary Deployment','Lambda Aliases','CloudWatch Alarm'],
+       exam:'Lambda deployments use Lambda aliases with weighted routing. CodeDeploy manages the weight shift. Traffic shifting strategies: Canary (X% then 100%), Linear (X% increments), AllAtOnce. A CloudWatch alarm in the deployment triggers instant rollback.'},
+      {title:'Multi-Region CodeDeploy Pipeline with Health Gates',level:5,ldesc:'Advanced',
+       problem:'A global app needs to deploy to us-east-1 first, validate for 15 minutes, then roll out to eu-west-1 and ap-southeast-1 only if us-east-1 is healthy.',
+       what:'Build a Step Functions state machine: CodeDeploy to us-east-1 → wait 15 minutes → Lambda checks error rate + latency metrics → if healthy: parallel CodeDeploy to 2 other regions; if unhealthy: rollback us-east-1 + SNS page on-call.',
+       tech:['CodeDeploy','Step Functions','Lambda','CloudWatch','SNS','Multi-Region'],
+       exam:'CodeDeploy is regional — each region needs its own deployment group. Multi-region orchestration requires Step Functions or CodePipeline with regional actions. Step Functions wait states are cheaper than polling loops in Lambda.'},
+    ]
+  },
+  {
+    id:'codepipeline', name:'AWS CodePipeline', sub:'CI/CD Pipeline Orchestration', icon:'🔄', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'Your First CodePipeline (Source → Build → Deploy)',level:1,ldesc:'Beginner',
+       problem:'A deployment requires: manual git pull, manual tests, manual upload to S3, manual EC2 update. This 45-minute process runs 5 times/day.',
+       what:'Create a 3-stage CodePipeline: Source (CodeCommit), Build (CodeBuild: test + package), Deploy (CodeDeploy to EC2). Every commit to main branch automatically runs the full pipeline.',
+       tech:['CodePipeline','CodeCommit','CodeBuild','CodeDeploy','Terraform'],
+       exam:'CodePipeline stages: Source, Build, Test, Deploy, Approval, Invoke. Actions within a stage can run in parallel (run order = 1) or sequence (run order = 1, 2, 3). The pipeline artifact store is an S3 bucket — every stage reads/writes artifacts there.'},
+      {title:'CodePipeline Manual Approval Gate',level:2,ldesc:'Beginner+',
+       problem:'Deployments to production happen automatically — even on Friday afternoons. Engineers want a human gate before production.',
+       what:'Add a Manual Approval action between staging and production deploy stages. Configure SNS notification (email to release manager) with review URL. Set approval timeout to 8 hours. Test approve and reject flows.',
+       tech:['CodePipeline','Manual Approval','SNS','Email'],
+       exam:'Manual Approval action pauses the pipeline until a human approves/rejects via console, CLI, or API. Approval requests can include a URL (link to staging environment) and comments. If not acted on within the timeout, pipeline continues or fails based on config.'},
+      {title:'CodePipeline with Multiple Deploy Environments',level:3,ldesc:'Intermediate',
+       problem:'The team deploys directly to production from their laptops. There is no dev → staging → production promotion process.',
+       what:'Build a pipeline: Source → Build → Deploy to Dev (auto) → Integration Tests → Manual Approval → Deploy to Staging → Smoke Tests → Manual Approval → Deploy to Production. Each environment is a separate CodeDeploy deployment group.',
+       tech:['CodePipeline','CodeDeploy','CodeBuild','Multi-Stage','Terraform'],
+       exam:'CodePipeline deployments to multiple environments use multiple Deploy stages with different deployment group targets. Use pipeline variables or environment-specific CodeBuild projects to inject environment-specific config (DB endpoints, feature flags).'},
+      {title:'Cross-Account CodePipeline Deployment',level:4,ldesc:'Intermediate+',
+       problem:'The CI/CD account needs to deploy to a production account. Currently developers in the prod account manually deploy because the pipeline cannot access prod.',
+       what:'Create a CodePipeline in the tooling account. Configure cross-account IAM role in the prod account. Add KMS CMK for artifact encryption (required for cross-account). Add Deploy action using the cross-account role. Test end-to-end.',
+       tech:['CodePipeline','Cross-Account IAM','KMS','S3','Terraform'],
+       exam:'Cross-account CodePipeline requires: (1) S3 artifact bucket policy allowing prod account, (2) KMS key policy allowing prod account, (3) Cross-account IAM role in prod account with CodeDeploy permissions, (4) Pipeline action with roleArn pointing to prod role.'},
+      {title:'CodePipeline with ECS Blue/Green and Approval Rollback',level:5,ldesc:'Advanced',
+       problem:'A banking API needs: automated deployment to ECS, traffic shifted 10% at a time, automatic rollback on error rate spike, and compliance audit trail of who approved each production deployment.',
+       what:'Build a complete pipeline: CodeCommit → CodeBuild (test + Docker build + push ECR) → CodeDeploy ECS Blue/Green (canary 10% for 5 minutes with CloudWatch error gate) → Manual Approval → 100% traffic shift → Log approval metadata to DynamoDB for audit.',
+       tech:['CodePipeline','CodeDeploy ECS','Blue/Green','DynamoDB','CloudWatch'],
+       exam:'ECS Blue/Green in CodePipeline requires: CodeDeploy deployment provider (not ECS rolling), an imagedefinitions.json or imageDetail.json artifact from CodeBuild, two target groups, and an AppSpec YAML specifying the ECS service and container.'},
+    ]
+  },
+
+  // ─── MONITORING ────────────────────────────────────────────────────────────
+  {
+    id:'cloudwatch', name:'Amazon CloudWatch', sub:'Monitoring & Observability', icon:'📊', color:'#06b6d4', cat:'monitoring',
+    projects:[
+      {title:'CloudWatch Metrics and Custom Metrics',level:1,ldesc:'Beginner',
+       problem:'An EC2 instance is running out of disk space. CloudWatch does not alert because disk metrics are not collected by default.',
+       what:'Install CloudWatch Agent on EC2 to collect: disk usage, memory usage, swap usage. Create custom metrics for application-specific data (orders per minute). View all metrics in a CloudWatch dashboard.',
+       tech:['CloudWatch Agent','EC2','Custom Metrics','Dashboard','Python'],
+       exam:'CloudWatch does NOT collect memory or disk usage by default — you need the CloudWatch Agent. Basic monitoring: 5-minute intervals (free). Detailed monitoring: 1-minute intervals (extra cost). Custom metrics: PutMetricData API, minimum 1-second resolution with high-resolution metrics.'},
+      {title:'CloudWatch Alarms with SNS and Auto Scaling',level:2,ldesc:'Beginner+',
+       problem:'CPU spikes to 100% for 20 minutes before someone notices and adds capacity manually.',
+       what:'Create a composite alarm: CPU > 80% for 5 minutes AND memory > 70% → SNS alert to ops team. Create separate alarm: CPU > 60% for 3 minutes → trigger ASG scale-out policy. Test both alarm paths.',
+       tech:['CloudWatch Alarms','SNS','ASG','Composite Alarm','Terraform'],
+       exam:'CloudWatch Alarm states: OK, ALARM, INSUFFICIENT_DATA. Composite Alarms combine multiple alarms with AND/OR logic — reduces alarm noise. Alarm evaluation: period × datapoints_to_alarm. 3 periods of 1 minute = 3-minute evaluation.'},
+      {title:'CloudWatch Logs Insights for Application Troubleshooting',level:3,ldesc:'Intermediate',
+       problem:'An application has an intermittent error. Grepping through GB of log files takes hours. By the time the engineer finds the cause, the customer is angry.',
+       what:'Configure CloudWatch Logs with structured JSON logging. Write Logs Insights queries: top 10 error messages by count, p99 API latency by endpoint, correlated errors within 5 minutes of a deployment.',
+       tech:['CloudWatch Logs Insights','Lambda','JSON Logging','Python','Terraform'],
+       exam:'Logs Insights query syntax: fields, filter, stats, sort, limit. | filter @message like "ERROR" | stats count(*) by bin(5m) — groups errors by 5-minute windows. Logs Insights is ad-hoc (interactive). CloudWatch Metric Filters extract metrics from logs for continuous monitoring.'},
+      {title:'CloudWatch Container Insights for ECS',level:4,ldesc:'Intermediate+',
+       problem:'ECS tasks are crashing intermittently. CloudWatch shows EC2-level metrics but not container-level memory, CPU, or restart counts.',
+       what:'Enable Container Insights on the ECS cluster. Build a dashboard: per-container CPU/memory, task restarts per hour, failed task events. Create alarm: >2 task restarts in 10 minutes → SNS page on-call.',
+       tech:['Container Insights','ECS','CloudWatch Dashboard','SNS','Terraform'],
+       exam:'Container Insights uses the CloudWatch Agent as a DaemonSet (ECS) or DaemonSet (EKS). It collects container-level metrics not available from the standard EC2/ECS metrics. Additional cost: charged for custom metrics per data point.'},
+      {title:'CloudWatch Evidently for Feature Flag Management',level:5,ldesc:'Advanced',
+       problem:'A new feature needs to be rolled out to 5% of users for A/B testing. Deploying and rolling back code for each experiment is slow.',
+       what:'Create a CloudWatch Evidently project with a feature flag (new-checkout-flow, enabled for 5% of users). Instrument the app to evaluate the flag per user session. Define metrics to track (conversion rate). Analyze experiment results after 1 week.',
+       tech:['CloudWatch Evidently','Feature Flags','A/B Testing','Lambda','SDK'],
+       exam:'CloudWatch Evidently is AWS\'s managed feature flagging and A/B testing service. Evaluate feature flags client-side or via the Evidently SDK. Store evaluation calls in Kinesis Firehose for analysis. This is a newer DVA-C02 exam topic.'},
+    ]
+  },
+  {
+    id:'xray', name:'AWS X-Ray', sub:'Distributed Tracing', icon:'🔍', color:'#06b6d4', cat:'monitoring',
+    projects:[
+      {title:'X-Ray Tracing for Lambda',level:1,ldesc:'Beginner',
+       problem:'A Lambda function calls 3 services (DynamoDB, S3, external API). One call is slow but the CloudWatch logs show nothing useful.',
+       what:'Enable X-Ray active tracing on Lambda. Import the X-Ray SDK and instrument all AWS SDK calls. Generate load. In X-Ray console, find the slowest traces, identify which service is the bottleneck.',
+       tech:['X-Ray','Lambda','Python','AWS X-Ray SDK','DynamoDB'],
+       exam:'X-Ray tracing modes: PassThrough (no tracing), Active (trace all requests). X-Ray SDK automatically traces AWS SDK calls when you use the patched SDK client. Sampling rules: default 5% + 1 req/sec per host. Custom sampling rules for higher-priority paths.'},
+      {title:'X-Ray Service Map for Microservices',level:2,ldesc:'Beginner+',
+       problem:'A microservices app has 6 services. Nobody knows which service calls which. Debugging failures means manually tracing logs across 6 different log groups.',
+       what:'Instrument all 6 services (Lambda + ECS) with X-Ray SDK. Pass the trace header (X-Amzn-Trace-Id) between services. View the service map in X-Ray console — verify it shows the correct topology and latency for each edge.',
+       tech:['X-Ray','ECS','Lambda','X-Ray SDK','Service Map'],
+       exam:'X-Ray propagates traces via the X-Amzn-Trace-Id HTTP header. Each service segment adds subsegments for downstream calls. The service map is auto-generated from trace data. Annotations (indexed, searchable) vs Metadata (not indexed, used for debugging).'},
+      {title:'X-Ray Groups and Sampling Rules',level:3,ldesc:'Intermediate',
+       problem:'X-Ray stores 5% of traces by default. Critical payment endpoint needs 100% tracing. Analytics endpoint can be 1%. Uniform sampling wastes money.',
+       what:'Create custom sampling rules: payment/* endpoint = 100% sampling, /health = 0% (suppress), everything else = 5%. Create an X-Ray Group with filter expression for payment traces. Set up CloudWatch alarm on payment trace error rate.',
+       tech:['X-Ray Sampling Rules','X-Ray Groups','CloudWatch','API Gateway'],
+       exam:'X-Ray sampling is evaluated at the service that starts the trace. Sampling rules are evaluated in priority order (lower number = higher priority). Reservoir + fixed_rate: reservoir=5 (always trace up to 5/sec), fixed_rate=0.05 (5% of remainder).'},
+      {title:'X-Ray Analytics for Performance Optimization',level:4,ldesc:'Intermediate+',
+       problem:'p99 API latency is 3 seconds but average is 200ms. The 1% of slow requests cause customer complaints but are invisible in aggregate metrics.',
+       what:'Use X-Ray Analytics to filter: response_time > 2 AND annotation.user_type = "premium". Identify the slowest subsegments across all matched traces. Build a CloudWatch metric filter counting traces with response_time > 2s. Alert when rate > 0.1%.',
+       tech:['X-Ray Analytics','Annotations','CloudWatch Metric Filter','API Gateway'],
+       exam:'X-Ray Annotations are key-value pairs indexed for filtering (max 50 per trace). Metadata is not indexed. Use add_annotation() for searchable data, add_metadata() for debugging-only data. X-Ray Analytics allows complex filter expressions on annotations.'},
+      {title:'X-Ray Insights for Automated Anomaly Detection',level:5,ldesc:'Advanced',
+       problem:'An SRE team manually monitors X-Ray dashboards. Anomalies are noticed only during business hours. Night incidents go undetected for hours.',
+       what:'Enable X-Ray Insights for automatic anomaly detection. Configure notifications via SNS for new insights. Build a Lambda triggered by X-Ray Insights events that: creates a PagerDuty incident, posts the service map at time of anomaly to Slack, runs a Logs Insights query for correlated errors.',
+       tech:['X-Ray Insights','SNS','Lambda','PagerDuty','Slack Webhook'],
+       exam:'X-Ray Insights uses ML to detect anomalies (fault rate increase, error rate increase, latency increase) in the service graph and groups them into Insights. Each Insight has impact (affected requests) and a root cause analysis. This is a newer X-Ray feature tested in DVA-C02.'},
+    ]
+  },
+  {
+    id:'cloudtrail', name:'AWS CloudTrail', sub:'API Audit Logging', icon:'📋', color:'#06b6d4', cat:'monitoring',
+    projects:[
+      {title:'CloudTrail Multi-Region Trail Setup',level:1,ldesc:'Beginner',
+       problem:'A security incident occurred. Nobody can tell who deleted the S3 bucket or when because CloudTrail was never set up.',
+       what:'Create a CloudTrail trail enabled for all regions, management events (read + write), and data events for the critical S3 bucket. Enable log file validation (detects tampering). Deliver logs to a dedicated, locked-down S3 bucket.',
+       tech:['CloudTrail','S3','KMS','Terraform'],
+       exam:'CloudTrail logs API calls. Management events = control plane (CreateBucket, RunInstances). Data events = data plane (S3:GetObject, Lambda:Invoke) — extra cost. Log file validation creates a digest file you can use to detect if log files were deleted or modified.'},
+      {title:'CloudTrail EventBridge Integration for Real-Time Alerts',level:2,ldesc:'Beginner+',
+       problem:'Root account is used to create IAM users. This is a critical security violation but nobody is alerted.',
+       what:'Create EventBridge rules matching CloudTrail management events: (1) root account sign-in → SNS alert, (2) IAM user creation → SNS alert, (3) security group changed to 0.0.0.0/0 → Lambda auto-remediation.',
+       tech:['CloudTrail','EventBridge','SNS','Lambda','Security'],
+       exam:'CloudTrail events arrive in EventBridge within ~15 minutes for standard delivery, or near-real-time for EventBridge integration. The event source is aws.{service} and detail-type is "AWS API Call via CloudTrail". This is the standard pattern for security automation.'},
+      {title:'CloudTrail Insights for Unusual API Activity',level:3,ldesc:'Intermediate',
+       problem:'A compromised IAM key is making thousands of DescribeInstances calls. Nobody notices because volume looks normal in a sea of legitimate traffic.',
+       what:'Enable CloudTrail Insights on write management events. Simulate an API rate spike. View the Insight event showing the baseline vs anomalous rate. Build a Lambda triggered by Insights events that quarantines the IAM key.',
+       tech:['CloudTrail Insights','Lambda','IAM','EventBridge','SNS'],
+       exam:'CloudTrail Insights detects unusual write management event rates (e.g., 10x normal rate of TerminateInstances). Insights events are separate from management events — you need to enable them explicitly. They appear in the Insights tab and also in the event history.'},
+      {title:'Athena CloudTrail Analysis',level:4,ldesc:'Intermediate+',
+       problem:'Security team wants to know: which IAM roles were used from outside corporate IP range in the last 90 days. Manually reviewing CloudTrail JSON is impossible at scale.',
+       what:'Use CloudTrail Lake or create an Athena table on CloudTrail S3 output. Write SQL queries: failed auth attempts by user, IAM assume-role events by source IP, S3 delete events by user, denied API calls by service.',
+       tech:['Athena','CloudTrail','SQL','S3','CloudTrail Lake'],
+       exam:'CloudTrail Lake is a managed Athena-like service specifically for CloudTrail. It stores events in a queryable format for up to 7 years. Alternative: create Athena table on CloudTrail S3 with partitioning by account/region/date for performance.'},
+      {title:'CloudTrail Organization Trail with Centralized Security',level:5,ldesc:'Advanced',
+       problem:'A company has 30 AWS accounts. Each account has its own CloudTrail. Security team has to check 30 different S3 buckets and 30 different log groups for incidents.',
+       what:'Create an Organization Trail that automatically applies to all current and future accounts. Deliver all logs to a central Security account S3 bucket with SCP preventing trail deletion. Build a CloudWatch Logs Insights query across all accounts. Trigger Lambda on critical events.',
+       tech:['CloudTrail Organization Trail','AWS Organizations','SCP','Lambda','CloudWatch'],
+       exam:'Organization Trail: created from the management account, automatically applies to all member accounts. Member accounts cannot disable it (if SCP blocks cloudtrail:StopLogging). This is the recommended pattern for centralized security logging.'},
+    ]
+  },
+
+  // ─── ADDITIONAL ────────────────────────────────────────────────────────────
+  {
+    id:'apigateway', name:'Amazon API Gateway', sub:'REST & WebSocket APIs', icon:'🔌', color:'#06b6d4', cat:'compute',
+    projects:[
+      {title:'REST API with Lambda Integration',level:1,ldesc:'Beginner',
+       problem:'A Lambda function can only be triggered manually or by events. It needs to be callable via HTTP from any frontend.',
+       what:'Create a REST API Gateway with GET /users and POST /users resources. Lambda proxy integration (event contains headers, path, body). Deploy to a stage with throttling (1,000 RPS, 5,000 burst). Test with curl.',
+       tech:['API Gateway','Lambda','Terraform','Stages','curl'],
+       exam:'Lambda proxy integration passes the entire HTTP request to Lambda as an event object. Lambda must return {statusCode, headers, body} in the response. Non-proxy (custom) integration requires mapping templates (Velocity Template Language) to transform request/response.'},
+      {title:'API Gateway Usage Plans and API Keys',level:2,ldesc:'Beginner+',
+       problem:'A public API is being hammered by one user making 50,000 calls/day. Other users experience throttling.',
+       what:'Create Usage Plans: Free tier (1,000/day, 10 RPS), Pro tier (100,000/day, 100 RPS). Generate API keys for each client. Enforce API key on the methods. Test throttling — 429 Too Many Requests when limit is hit.',
+       tech:['API Gateway Usage Plans','API Keys','Throttling','CloudWatch'],
+       exam:'API Gateway throttling: account-level default 10,000 RPS, stage-level, method-level, and usage plan-level throttling. 429 status = throttled. Usage plans require API keys. Per-client throttling prevents one customer from impacting others.'},
+      {title:'API Gateway WebSocket for Real-Time Chat',level:3,ldesc:'Intermediate',
+       problem:'A chat app polls the API every 2 seconds checking for new messages. This wastes bandwidth and creates 2-second message delays.',
+       what:'Build a WebSocket API: $connect handler (store connectionId in DynamoDB), $disconnect handler (remove connectionId), $default handler (broadcast message to all connections via ApiGatewayManagementApi). Build a React chat UI.',
+       tech:['API Gateway WebSocket','Lambda','DynamoDB','React','boto3'],
+       exam:'WebSocket API routes: $connect (new connection), $disconnect (connection closed), $default (fallback), custom routes (based on action field in message). To send message TO a client: POST to @connections/{connectionId} endpoint using ApiGatewayManagementApi.'},
+      {title:'API Gateway Request Validation and Transformation',level:4,ldesc:'Intermediate+',
+       problem:'Lambda function receives malformed requests (missing required fields, wrong types). Validation logic is duplicated across 20 Lambda functions.',
+       what:'Move validation to API Gateway: create request models (JSON Schema), enable request validators (body + params). Add mapping templates to transform request before Lambda (rename fields, add defaults). Lambda code becomes simpler.',
+       tech:['API Gateway Models','JSON Schema','Mapping Templates','VTL','Lambda'],
+       exam:'API Gateway request validation happens BEFORE Lambda is invoked — Lambda is not charged for invalid requests. JSON Schema models define shape of request body. Returns 400 automatically for invalid requests. VTL mapping templates transform request/response body.'},
+      {title:'API Gateway Private Integration with VPC Link',level:5,ldesc:'Advanced',
+       problem:'An internal microservice runs in a private VPC (no internet access). External clients need to call it via HTTPS without exposing it to the internet.',
+       what:'Create a VPC Link connecting API Gateway to an NLB inside the VPC. The NLB targets private ECS Fargate tasks. Build a request authorizer Lambda (validates JWT, checks internal scopes). Add WAF to API Gateway for rate limiting and IP filtering.',
+       tech:['API Gateway VPC Link','NLB','ECS','Lambda Authorizer','WAF'],
+       exam:'VPC Link lets API Gateway route to resources in private VPCs via NLB. The NLB must be in the same account and region. API Gateway sends the request to the NLB internal IP — traffic never leaves AWS network. Requires NLB (not ALB) for REST API VPC Link.'},
+    ]
+  },
+  {
+    id:'stepfunctions', name:'AWS Step Functions', sub:'Serverless Orchestration', icon:'🎯', color:'#06b6d4', cat:'compute',
+    projects:[
+      {title:'Your First Step Functions State Machine',level:1,ldesc:'Beginner',
+       problem:'A Lambda function calls 4 other Lambda functions sequentially — error handling is a mess of try/except blocks 300 lines long.',
+       what:'Build a Step Functions Express Workflow with Task states (Lambda calls), Choice state (if/else based on result), Wait state (30 seconds), and Fail state. Visualize execution in the console.',
+       tech:['Step Functions','Lambda','ASL (Amazon States Language)','JSON'],
+       exam:'Step Functions Standard: at-most-once execution, 1-year max duration, charged per state transition. Express: at-least-once, 5-minute max, charged by duration/executions. Use Standard for critical workflows, Express for high-volume event processing.'},
+      {title:'Step Functions Error Handling and Retries',level:2,ldesc:'Beginner+',
+       problem:'A data processing workflow fails if any step fails. The entire job restarts from scratch — wasting 2 hours of completed work.',
+       what:'Add Retry (3 attempts, exponential backoff) and Catch (fallback to error handler state) to each Task state. Build an error handler that logs to DynamoDB and sends SNS alert. Test by injecting failures.',
+       tech:['Step Functions','Retry','Catch','DynamoDB','SNS'],
+       exam:'Retry: IntervalSeconds (base), BackoffRate (multiplier), MaxAttempts. Exponential backoff: 1s → 2s → 4s. Catch: ErrorEquals, Next (state to transition to). Catch is evaluated AFTER all retries are exhausted. "States.ALL" catches any error type.'},
+      {title:'Step Functions Map State for Parallel Processing',level:3,ldesc:'Intermediate',
+       problem:'Processing 1,000 CSV files sequentially takes 8 hours. Each file is independent and could be processed in parallel.',
+       what:'Use Step Functions Map state with maxConcurrency=50. Each Map iteration invokes a Lambda to process one file. Total processing time drops from 8 hours to ~10 minutes. Handle partial failures (tolerated failure percentage).',
+       tech:['Step Functions Map State','Lambda','S3','DynamoDB'],
+       exam:'Map state: runs the same workflow for each item in an array (concurrently up to maxConcurrency). Parallel state: runs DIFFERENT branches concurrently and waits for ALL to complete. Map = same logic, N items. Parallel = different logic, fixed branches.'},
+      {title:'Step Functions Wait for Callback Token',level:4,ldesc:'Intermediate+',
+       problem:'A workflow needs to pause and wait for a human to approve an order before continuing. Polling every minute for hours wastes Lambda executions.',
+       what:'Use Step Functions callback pattern (.waitForTaskToken): task sends token to SQS, Lambda pauses. Human approval service calls SendTaskSuccess/SendTaskFailure with the token. Step Functions resumes the exact paused execution.',
+       tech:['Step Functions Callback','SQS','Lambda','SendTaskSuccess','Terraform'],
+       exam:'Callback pattern: task sends a taskToken to an external system and pauses. .waitForTaskToken in the Resource ARN activates this. The execution can wait up to 1 year (Standard). This is the correct pattern for human-in-the-loop workflows.'},
+      {title:'Distributed Map for Petabyte-Scale Processing',level:5,ldesc:'Advanced',
+       problem:'A genomics company needs to process 10 million DNA sequences stored in S3. A regular Map state with Lambda hits concurrency limits.',
+       what:'Use Step Functions Distributed Map (tolerates 10 million items) with itemReader pointing to S3 inventory. Each child workflow is an Express Workflow (Lambda + DynamoDB write). Implement checkpointing for resume on failure. Track progress in real time via CloudWatch dashboard.',
+       tech:['Step Functions Distributed Map','Express Workflows','S3','Lambda','CloudWatch'],
+       exam:'Distributed Map (2023 launch): can process S3 objects directly without listing them in an array. Supports CSV/JSON from S3 as input. Scales to millions of concurrent child executions. Child workflows are Express Workflows (at-least-once). This is a new DVA-C02 topic.'},
+    ]
+  },
+  {
+    id:'ses', name:'Amazon SES', sub:'Simple Email Service', icon:'📧', color:'#06b6d4', cat:'messaging',
+    projects:[
+      {title:'SES Domain Verification and First Email',level:1,ldesc:'Beginner',
+       problem:'Emails sent from an EC2 server with smtp.gmail.com get blocked by spam filters and the team cannot send transactional emails.',
+       what:'Verify a domain in SES (add DNS TXT records for verification, DKIM, and SPF). Send a test email via boto3. Move out of sandbox mode by submitting production access request. Check email headers for authentication results.',
+       tech:['SES','DKIM','SPF','boto3','Route 53'],
+       exam:'SES sandbox: can only send to verified email addresses, max 200 emails/day. Production: request production access in support console. DKIM (DomainKeys Identified Mail) adds a digital signature to emails proving they came from your domain — reduces spam score.'},
+      {title:'SES Transactional Email with Templates',level:2,ldesc:'Beginner+',
+       problem:'Welcome emails, password reset emails, and order confirmations all have the same HTML structure but different content. Duplicate code in 6 Lambda functions.',
+       what:'Create SES email templates (HTML + text fallback with {{variable}} placeholders). Build a Lambda function that calls SendBulkTemplatedEmail with per-recipient personalisation (user name, order number, reset link).',
+       tech:['SES Templates','Lambda','boto3','HTML Email'],
+       exam:'SES templates use Handlebars-style {{variable}} syntax. SendTemplatedEmail: 1 recipient. SendBulkTemplatedEmail: up to 50 recipients per call with different substitution data. Templates are stored in SES and versioned.'},
+      {title:'SES Bounce and Complaint Handling',level:3,ldesc:'Intermediate',
+       problem:'SES account was suspended because the bounce rate reached 15%. Nobody was handling bounces — invalid emails were being retried forever.',
+       what:'Configure SES SNS notifications for bounces and complaints. Build a Lambda that processes bounce/complaint events: removes hard-bounced addresses from your mailing list, unsubscribes complaint users, updates DynamoDB suppression list.',
+       tech:['SES','SNS','Lambda','DynamoDB','Bounce Handling'],
+       exam:'SES bounce rate threshold: warn >5%, suspend >10%. Complaint rate: warn >0.1%, suspend >0.5%. Hard bounce = permanent delivery failure (invalid address) — never retry. Soft bounce = temporary (mailbox full) — retry is OK. Always process bounce notifications within 24 hours.'},
+      {title:'SES Email Receiving and Processing Pipeline',level:4,ldesc:'Intermediate+',
+       problem:'Customers send support emails to support@company.com. They are read manually and manually entered into the ticketing system — 2 hours/day of work.',
+       what:'Configure SES email receiving for your domain. Create receipt rules: store email in S3, trigger Lambda to extract sender, subject, body → create ticket in DynamoDB via API → send auto-reply SES email → notify Slack webhook.',
+       tech:['SES Email Receiving','S3','Lambda','DynamoDB','Slack'],
+       exam:'SES can receive emails for verified domains. Receipt rules are processed in order. Actions: S3 (store), SNS (notify), Lambda (process), Bounce (reject). SES receiving is only in us-east-1, us-west-2, eu-west-1. You need MX record pointing to SES.'},
+      {title:'SES Dedicated IP and Email Analytics Dashboard',level:5,ldesc:'Advanced',
+       problem:'A marketing platform shares IPs with other SES customers. Their spam campaigns are damaging your IP reputation and delivery rates.',
+       what:'Provision SES dedicated IPs (warm them up with increasing volume over 30 days). Enable SES event publishing to Kinesis Firehose: track sends, opens, clicks, bounces, complaints per campaign. Build a QuickSight dashboard: delivery rate, open rate, click rate, revenue per email.',
+       tech:['SES Dedicated IPs','Kinesis Firehose','QuickSight','Email Analytics','Lambda'],
+       exam:'SES dedicated IPs cost $24.95/IP/month. Warmup plan: start with low volume (200/day), increase 20% daily until reaching desired volume. Shared IPs are affected by other SES customers\' reputation. Dedicated IPs let you control your own sending reputation.'},
+    ]
+  },
+  {
+    id:'ssm', name:'EC2 Systems Manager', sub:'SSM — Fleet Management', icon:'⚙️', color:'#6366f1', cat:'devops',
+    projects:[
+      {title:'SSM Session Manager — No SSH Required',level:1,ldesc:'Beginner',
+       problem:'Developers SSH to EC2 instances using long-lived keypairs. If the private key is lost or stolen, access cannot be revoked without new AMIs.',
+       what:'Enable SSM Session Manager. Remove SSH keypairs and close port 22 in security groups. Access EC2 via SSM Session Manager (browser or CLI). Log all sessions to CloudWatch Logs and S3.',
+       tech:['SSM Session Manager','IAM','CloudWatch','EC2'],
+       exam:'SSM Session Manager requires: SSM Agent on instance (pre-installed on Amazon Linux 2+), IAM role with AmazonSSMManagedInstanceCore policy, and SSM endpoint reachable (public internet or VPC endpoint). No bastion host, no open port 22.'},
+      {title:'SSM Parameter Store for Configuration Management',level:2,ldesc:'Beginner+',
+       problem:'Database connection strings are hardcoded in Lambda environment variables. Rotating the DB password requires redeploying every Lambda function.',
+       what:'Store DB credentials in SSM Parameter Store (SecureString type, encrypted with KMS). Update all Lambda functions to fetch parameters at runtime using SSM GetParameter. Rotate the DB password — Lambda picks up new value without redeployment.',
+       tech:['SSM Parameter Store','KMS','Lambda','Python','boto3'],
+       exam:'SSM Parameter Store: Standard (free, 4KB max) vs Advanced (paid, 8KB, parameter policies, throughput). SecureString = encrypted with KMS. Lambda can use SSM Parameters Extension (Lambda layer) for caching — avoids SSM API call on every invocation.'},
+      {title:'SSM Run Command for Fleet Management',level:3,ldesc:'Intermediate',
+       problem:'A security patch needs to be applied to 200 EC2 instances. SSHing to each one manually takes a week.',
+       what:'Use SSM Run Command to execute a shell script on all instances tagged Env=prod. Command: update packages, apply specific CVE patch, restart service. Track per-instance success/failure. Set rate control to 50 instances concurrently with error threshold 10%.',
+       tech:['SSM Run Command','EC2 Tags','S3','CloudWatch','Shell Script'],
+       exam:'SSM Run Command: execute commands without SSH on all matching instances. Rate control: MaxConcurrency (how many at once) and MaxErrors (stop if N failures). Output to S3 or CloudWatch Logs. Documents (commands) are versioned SSM Documents.'},
+      {title:'SSM Patch Manager Automated Patching',level:4,ldesc:'Intermediate+',
+       problem:'A compliance audit requires all EC2 instances to be patched to critical severity within 48 hours. Currently patching is manual and takes 2 weeks.',
+       what:'Create a Patch Baseline (auto-approve Critical patches after 3 days), Patch Group (tag EC2 instances with Patch Group = Production), Maintenance Window (Sunday 2am, 2 hours). Run AWS-RunPatchBaseline. Compliance dashboard shows patched % and missing patches.',
+       tech:['SSM Patch Manager','Maintenance Window','Patch Baseline','CloudWatch'],
+       exam:'SSM Patch Manager workflow: Patch Baseline (what to patch) → Patch Group (which instances) → Maintenance Window (when to patch) → Run Command (how to execute). Patch compliance is stored in SSM Compliance and visible in Security Hub.'},
+      {title:'SSM Automation for Self-Healing Infrastructure',level:5,ldesc:'Advanced',
+       problem:'EC2 instances running out of disk space cause service outages. The on-call team manually runs cleanup scripts at 3am.',
+       what:'Create an SSM Automation document: triggered by CloudWatch Alarm (disk > 90%) → clean up /tmp and logs → if still > 85%: expand EBS volume → notify SNS with before/after disk usage. Add approval step for volume expansion.',
+       tech:['SSM Automation','CloudWatch Alarm','EBS','SNS','EventBridge'],
+       exam:'SSM Automation documents execute multi-step workflows on AWS resources (not just on instances). Automation can call AWS APIs (like ModifyVolume for EBS expansion). Human approval can pause automation via the Approve action. This is the remediation half of the Config + SSM pattern.'},
+    ]
+  },
+  {
+    id:'autoscaling', name:'Auto Scaling', sub:'EC2 & Application Auto Scaling', icon:'📈', color:'#f97316', cat:'compute',
+    projects:[
+      {title:'EC2 Auto Scaling Group Basics',level:1,ldesc:'Beginner',
+       problem:'A web server runs on a single EC2 instance. During traffic spikes the instance is overwhelmed. Outside business hours it runs idle at 5% CPU.',
+       what:'Create an ASG with Launch Template, min=1, max=6, desired=2 across 2 AZs. Add ALB and target group. Test manual scaling (change desired capacity). Observe instance launch/terminate in the EC2 console.',
+       tech:['ASG','Launch Template','ALB','EC2','Terraform'],
+       exam:'ASG maintains desired capacity across AZs (balance AZs). When an instance fails health check: ASG terminates it and launches a replacement. ASG does NOT restart failed instances — it replaces them with fresh ones from the Launch Template.'},
+      {title:'Auto Scaling Policies — Target Tracking vs Step',level:2,ldesc:'Beginner+',
+       problem:'The team set a simple scaling policy that adds 2 instances when CPU > 70%. But sudden traffic spikes take 5 minutes to be absorbed — the site is slow for 5 minutes.',
+       what:'Compare 3 scaling policy types: Simple (add 2 on alarm), Step (add 2 at 70%, add 4 at 80%, add 6 at 90%), Target Tracking (maintain 60% avg CPU). Load test all 3. Target tracking responds fastest.',
+       tech:['ASG Scaling Policies','CloudWatch','ALB','Apache Bench'],
+       exam:'Target Tracking creates CloudWatch alarms automatically. You set a metric TARGET (e.g., CPU 60%) and ASG figures out how many instances to add/remove. Step Scaling: different scaling adjustments for different alarm thresholds. Predictive Scaling: ML forecasts traffic for scheduled scale-out.'},
+      {title:'Lifecycle Hooks for Custom Launch/Terminate Logic',level:3,ldesc:'Intermediate',
+       problem:'When ASG terminates an instance during scale-in, in-flight requests are aborted. Also when a new instance launches, it needs 2 minutes to warm up its cache before receiving traffic.',
+       what:'Add lifecycle hooks: Launching hook (instance runs warm-up script, then sends CompleteLifecycleAction CONTINUE). Terminating hook (instance drains connections, uploads logs to S3, then CONTINUE). Test both hooks fire correctly during scale events.',
+       tech:['ASG Lifecycle Hooks','Lambda','SQS','EC2','S3'],
+       exam:'Lifecycle hooks put the instance in Wait state (default 3600s) before proceeding. The instance must call CompleteLifecycleAction or heartbeat within the timeout. Hooks notify via SNS or EventBridge. Terminating: CONTINUE = terminate, ABANDON = abort and keep instance.'},
+      {title:'Scheduled Scaling for Predictable Traffic',level:4,ldesc:'Intermediate+',
+       problem:'A news website gets 10x traffic every weekday morning at 8am when people arrive at work. Reactive scaling always lags 5 minutes behind.',
+       what:'Create scheduled scaling actions: scale to min=10 at 7:30am weekdays (pre-scale), scale to min=2 at 8pm weekdays (scale back), min=1 overnight. Combine with target tracking (handles unexpected traffic). Measure time-to-respond vs reactive-only.',
+       tech:['ASG Scheduled Scaling','Cron Expressions','Target Tracking','CloudWatch'],
+       exam:'Scheduled scaling uses cron or one-time datetime. It modifies min/max/desired directly. Combine with target tracking: scheduled scaling handles predictable load, target tracking handles unexpected spikes. Predictive Scaling (ML-based) can replace scheduled scaling if patterns are consistent.'},
+      {title:'Multi-Region Active-Active Auto Scaling with Route 53',level:5,ldesc:'Advanced',
+       problem:'All traffic goes to us-east-1. If that region has an outage, the service is completely down for up to 30 minutes until manual failover.',
+       what:'Deploy identical ASGs in us-east-1 and eu-west-1. Route 53 Latency-based routing with health checks on both regions. When us-east-1 fails health check, Route 53 routes 100% to eu-west-1 automatically. Each region scales independently via target tracking.',
+       tech:['ASG','Route 53 Latency Routing','Health Checks','CloudFormation StackSets'],
+       exam:'Route 53 failover is DNS-based — clients cache the DNS response. TTL matters: short TTL (60s) = faster failover but more DNS queries. Long TTL (300s) = slower failover but fewer DNS queries. Health check failure detection: 3 consecutive failures across 18+ health checker locations.'},
+    ]
+  },
+];
+
+// ── RENDER ──────────────────────────────────────────────────────────────────
+
+// Replace this URL with your Render Web Service URL once deployed
+const API_BASE_URL = 'http://localhost:3000/api'; 
+const USER_ID = 'guest_user_1'; // Dummy user ID for now
+
+const container = document.getElementById('servicesContainer');
+let completedProjects = {};
+
+// Load progress from Backend instead of localStorage
+async function loadProgress() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/progress/${USER_ID}`);
+    completedProjects = await response.json();
+  } catch (error) {
+    console.error("Failed to load progress:", error);
+    completedProjects = {}; // Fallback
+  }
+  
+  updateStats();
+  renderServices(SERVICES); // Initial render happens AFTER data loads
+}
+
+// Save progress to Backend instead of localStorage
+async function saveProgress() {
+  updateStats(); // Update UI immediately so it feels snappy
+  
+  try {
+    await fetch(`${API_BASE_URL}/progress/${USER_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(completedProjects)
+    });
+  } catch (error) {
+    console.error("Failed to save progress:", error);
+  }
+}
+
+function updateStats() {
+  const total = SERVICES.reduce((a,s)=>a+s.projects.length,0);
+  const done = Object.values(completedProjects).filter(Boolean).length;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('progressFill').style.width = (done/total*100)+'%';
+  document.getElementById('progressText').textContent = `${done} / ${total}`;
+}
+
+function getLevelClass(level) {
+  return ['','lv1','lv2','lv3','lv4','lv5'][level];
+}
+function getLevelName(level) {
+  return ['','Beginner','Beginner+','Intermediate','Intermediate+','Advanced'][level];
+}
+
+function getIconBg(cat) {
+  const map = {
+    compute:'rgba(249,115,22,0.15)',
+    storage:'rgba(59,130,246,0.15)',
+    messaging:'rgba(16,185,129,0.15)',
+    security:'rgba(239,68,68,0.15)',
+    devops:'rgba(99,102,241,0.15)',
+    monitoring:'rgba(6,182,212,0.15)',
+  };
+  return map[cat]||'rgba(100,116,139,0.15)';
+}
+
+function renderServices(services) {
+  container.innerHTML = '';
+  const cats = {
+    compute:  {label:'Compute & Containers', color:'#f97316'},
+    storage:  {label:'Storage & Databases',  color:'#3b82f6'},
+    messaging:{label:'Messaging & Streaming', color:'#10b981'},
+    security: {label:'Security & Identity',   color:'#ef4444'},
+    devops:   {label:'DevOps & CI/CD',         color:'#6366f1'},
+    monitoring:{label:'Monitoring & Observability', color:'#06b6d4'},
+  };
+
+  Object.entries(cats).forEach(([catKey,catInfo])=>{
+    const catServices = services.filter(s=>s.cat===catKey);
+    if(!catServices.length) return;
+
+    const section = document.createElement('div');
+    section.className='cat-section';
+    section.innerHTML=`<div class="cat-header">
+      <div class="cat-dot" style="background:${catInfo.color}"></div>
+      <div class="section-title" style="margin:0;border:none;color:${catInfo.color}">${catInfo.label}</div>
+      <span style="font-size:0.7rem;font-family:'JetBrains Mono',monospace;color:var(--muted)">${catServices.length} services · ${catServices.length*5} projects</span>
+    </div>`;
+
+    catServices.forEach(service=>{
+      const card = document.createElement('div');
+      card.className='service-card';
+      card.dataset.cat=service.cat;
+
+      const completedCount = service.projects.filter((_,i)=>completedProjects[`${service.id}_${i}`]).length;
+      if(completedCount===service.projects.length) card.classList.add('completed');
+
+      const dots = service.projects.map((_,i)=>`<div class="dot ${completedProjects[`${service.id}_${i}`]?'done':''}" title="Project ${i+1}"></div>`).join('');
+
+      card.innerHTML=`
+        <div class="service-header" onclick="toggleService(this.parentElement)">
+          <div class="service-icon" style="background:${getIconBg(service.cat)}">${service.icon}</div>
+          <div class="service-meta">
+            <div class="service-name">${service.name}</div>
+            <div class="service-sub">${service.sub}</div>
+          </div>
+          <div class="service-progress">
+            <div class="mini-dots">${dots}</div>
+            <span style="font-size:0.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted)">${completedCount}/5</span>
+          </div>
+          <div class="chevron">▼</div>
+        </div>
+        <div class="projects-body">${renderProjects(service)}</div>`;
+
+      section.appendChild(card);
+    });
+
+    container.appendChild(section);
+  });
+
+  updateStats();
+}
+
+function renderProjects(service) {
+  return service.projects.map((p,i)=>{
+    const key=`${service.id}_${i}`;
+    const done=completedProjects[key];
+    return `<div class="project-item" id="pi_${key}">
+      <div class="project-header">
+        <div class="project-check ${done?'checked':''}" onclick="toggleProject(event,'${key}')"></div>
+        <div class="project-info" onclick="toggleDetail('pi_${key}')">
+          <div class="project-title-row">
+            <span class="project-title">${p.title}</span>
+            <span class="level-badge ${getLevelClass(p.level)}">L${p.level} · ${getLevelName(p.level)}</span>
+          </div>
+          <div class="project-desc">${p.problem}</div>
+        </div>
+        <div class="expand-btn" onclick="toggleDetail('pi_${key}')">▼</div>
+      </div>
+      <div class="project-detail">
+        <div class="detail-section">
+          <div class="detail-label">What You Build</div>
+          <div class="detail-text">${p.what}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Tech Stack</div>
+          <div class="tech-chips">${p.tech.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+        </div>
+        <div class="detail-section">
+          <div class="exam-tip">${p.exam}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleService(card) {
+  card.classList.toggle('open');
+}
+
+function toggleDetail(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+
+function toggleProject(e, key) {
+  e.stopPropagation();
+  completedProjects[key] = !completedProjects[key];
+  const check = e.currentTarget;
+  check.classList.toggle('checked', completedProjects[key]);
+  // Update dot
+  const pi = check.closest('.project-item');
+  saveProgress();
+  // Re-render dots in service header
+  setTimeout(()=>renderServices(getCurrentServices()), 0);
+}
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function getCurrentServices() {
+  let s = SERVICES;
+  if(currentFilter!=='all') s=s.filter(x=>x.cat===currentFilter);
+  if(currentSearch) {
+    const q=currentSearch.toLowerCase();
+    s=s.filter(x=>
+      x.name.toLowerCase().includes(q)||
+      x.projects.some(p=>p.title.toLowerCase().includes(q)||p.problem.toLowerCase().includes(q))
+    );
+  }
+  return s;
+}
+
+function filterCat(cat, btn) {
+  currentFilter=cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderServices(getCurrentServices());
+}
+
+function searchProjects(q) {
+  currentSearch=q;
+  renderServices(getCurrentServices());
+}
+
+// Initial render
+
+</script>
+</body>
+</html>
