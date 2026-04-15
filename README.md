@@ -41,7 +41,7 @@ To run this project on your local machine, you will need [Node.js](https://nodej
    \`\`\`bash
    npm start
    \`\`\`
-   *Note: By default, the server will try to connect to a local PostgreSQL database at `postgresql://localhost:5432/dvaroadmap`. If you don't have Postgres running locally, you may see a connection error in the console, but the server will still boot.*
+   *Note: When you run `npm start`, the project will try to start a local PostgreSQL service using Homebrew before launching the server. If PostgreSQL is not installed or not available, the app still starts and falls back to local JSON storage in `data/db.json`.*
 
 4. **View the app:**
    Open your browser and navigate to `http://localhost:3000`
